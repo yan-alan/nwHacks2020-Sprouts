@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,9 @@
 		25AF515523CA8BA60082C16D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25AF515423CA8BA60082C16D /* Assets.xcassets */; };
 		25AF515823CA8BA60082C16D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25AF515723CA8BA60082C16D /* Preview Assets.xcassets */; };
 		25AF515B23CA8BA60082C16D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25AF515923CA8BA60082C16D /* LaunchScreen.storyboard */; };
+		25AF516E23CA8CAD0082C16D /* TerrariumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF516D23CA8CAD0082C16D /* TerrariumViewController.swift */; };
+		25AF517023CA8D450082C16D /* TerrariumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF516F23CA8D450082C16D /* TerrariumView.swift */; };
+		25AF517323CA8D560082C16D /* AlanYanHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 25AF517223CA8D560082C16D /* AlanYanHelpers */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,8 @@
 		25AF515723CA8BA60082C16D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		25AF515A23CA8BA60082C16D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		25AF515C23CA8BA60082C16D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25AF516D23CA8CAD0082C16D /* TerrariumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrariumViewController.swift; sourceTree = "<group>"; };
+		25AF516F23CA8D450082C16D /* TerrariumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrariumView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25AF517323CA8D560082C16D /* AlanYanHelpers in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +90,7 @@
 		25AF516823CA8C000082C16D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				25AF516F23CA8D450082C16D /* TerrariumView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -91,6 +98,7 @@
 		25AF516923CA8C050082C16D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				25AF516D23CA8CAD0082C16D /* TerrariumViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -118,6 +126,9 @@
 			dependencies = (
 			);
 			name = Sprouts;
+			packageProductDependencies = (
+				25AF517223CA8D560082C16D /* AlanYanHelpers */,
+			);
 			productName = Sprouts;
 			productReference = 25AF514823CA8BA40082C16D /* Sprouts.app */;
 			productType = "com.apple.product-type.application";
@@ -146,6 +157,9 @@
 				Base,
 			);
 			mainGroup = 25AF513F23CA8BA40082C16D;
+			packageReferences = (
+				25AF517123CA8D560082C16D /* XCRemoteSwiftPackageReference "UIKit-Toolbox" */,
+			);
 			productRefGroup = 25AF514923CA8BA40082C16D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -173,9 +187,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25AF517023CA8D450082C16D /* TerrariumView.swift in Sources */,
 				25AF514C23CA8BA40082C16D /* AppDelegate.swift in Sources */,
 				25AF515123CA8BA40082C16D /* Sprouts.xcdatamodeld in Sources */,
 				25AF515323CA8BA40082C16D /* ContentView.swift in Sources */,
+				25AF516E23CA8CAD0082C16D /* TerrariumViewController.swift in Sources */,
 				25AF514E23CA8BA40082C16D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -370,6 +386,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		25AF517123CA8D560082C16D /* XCRemoteSwiftPackageReference "UIKit-Toolbox" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yan-alan/UIKit-Toolbox.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		25AF517223CA8D560082C16D /* AlanYanHelpers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 25AF517123CA8D560082C16D /* XCRemoteSwiftPackageReference "UIKit-Toolbox" */;
+			productName = AlanYanHelpers;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		25AF514F23CA8BA40082C16D /* Sprouts.xcdatamodeld */ = {
