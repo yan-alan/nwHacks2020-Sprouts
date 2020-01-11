@@ -29,7 +29,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = TerrariumViewController()
+            let navigationController = UINavigationController(rootViewController: TerrariumViewController())
+            navigationController.navigationBar.isHidden = true
+            window.rootViewController = navigationController
+            
             self.window = window
             window.makeKeyAndVisible()
         }

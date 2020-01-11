@@ -17,6 +17,9 @@
 		25AF516E23CA8CAD0082C16D /* TerrariumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF516D23CA8CAD0082C16D /* TerrariumViewController.swift */; };
 		25AF517023CA8D450082C16D /* TerrariumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF516F23CA8D450082C16D /* TerrariumView.swift */; };
 		25AF517323CA8D560082C16D /* AlanYanHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 25AF517223CA8D560082C16D /* AlanYanHelpers */; };
+		25AF517523CA8EF50082C16D /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF517423CA8EF50082C16D /* Plant.swift */; };
+		25AF517723CA94730082C16D /* DetailedPlantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF517623CA94730082C16D /* DetailedPlantViewController.swift */; };
+		25AF517923CA94B30082C16D /* DetailedPlantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF517823CA94B30082C16D /* DetailedPlantView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		25AF515C23CA8BA60082C16D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25AF516D23CA8CAD0082C16D /* TerrariumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrariumViewController.swift; sourceTree = "<group>"; };
 		25AF516F23CA8D450082C16D /* TerrariumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrariumView.swift; sourceTree = "<group>"; };
+		25AF517423CA8EF50082C16D /* Plant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
+		25AF517623CA94730082C16D /* DetailedPlantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPlantViewController.swift; sourceTree = "<group>"; };
+		25AF517823CA94B30082C16D /* DetailedPlantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPlantView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +96,7 @@
 		25AF516823CA8C000082C16D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				25AF517823CA94B30082C16D /* DetailedPlantView.swift */,
 				25AF516F23CA8D450082C16D /* TerrariumView.swift */,
 			);
 			path = Views;
@@ -99,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				25AF516D23CA8CAD0082C16D /* TerrariumViewController.swift */,
+				25AF517623CA94730082C16D /* DetailedPlantViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -106,6 +114,7 @@
 		25AF516A23CA8C120082C16D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				25AF517423CA8EF50082C16D /* Plant.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -189,8 +198,11 @@
 			files = (
 				25AF517023CA8D450082C16D /* TerrariumView.swift in Sources */,
 				25AF514C23CA8BA40082C16D /* AppDelegate.swift in Sources */,
+				25AF517723CA94730082C16D /* DetailedPlantViewController.swift in Sources */,
 				25AF515123CA8BA40082C16D /* Sprouts.xcdatamodeld in Sources */,
 				25AF515323CA8BA40082C16D /* ContentView.swift in Sources */,
+				25AF517923CA94B30082C16D /* DetailedPlantView.swift in Sources */,
+				25AF517523CA8EF50082C16D /* Plant.swift in Sources */,
 				25AF516E23CA8CAD0082C16D /* TerrariumViewController.swift in Sources */,
 				25AF514E23CA8BA40082C16D /* SceneDelegate.swift in Sources */,
 			);
