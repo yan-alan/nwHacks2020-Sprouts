@@ -15,8 +15,8 @@ const collectionName = "PlantCollection";
  * 
  * @returns (200) plants - the array of plants associated with a user
  */
-router.get("/", function(req, res, next) {
-    const { username } = req.body;
+router.get("/:username", function(req, res, next) {
+    const username = String(req.params.username);
 
     database.open(dbName, collectionName)
         .then(collection => collection.findOne({ username }))
@@ -34,9 +34,11 @@ router.get("/", function(req, res, next) {
  * 
  * @returns (201) plant - the plant object that was successfully saved
  */
-router.post("/", function(req, res, next) {
-    const { plant, username } = req.body;
+router.post("/:username", function(req, res, next) {
+    const username = String(req.params.username);
+    const plant = req.body;
 
+    console.log("POST: " + JSON.stringify(req.body));
     database.open(dbName, collectionName)
         .then(collection => {
             return collection.updateOne(
@@ -70,8 +72,9 @@ router.post("/", function(req, res, next) {
  * 
  * @returns (200) plants - the array of plants associated with a user, after modifying the target plant
  */
-router.put("/", function(req, res, next) {
-    const { username, plant } = req.body;
+router.put("/:username", function(req, res, next) {
+    const username = String(req.params.username);
+    const plant = req.body;
 
     let plantCollection, newPlants;
     database.open(dbName, collectionName)
@@ -109,12 +112,13 @@ router.put("/", function(req, res, next) {
  * If user with matching username exists in database, finds given plant in user's list of plants by its id and then removes the plant.
  * 
  * @param {string} username - the user's username
- * @param {number} plantId - the id of the plant to be deleted
+ * @param {number} plant - the plant to be deleted
  * 
  * @returns (200) plants - the array of plants associated with a user, after deleting the target plant
  */
-router.delete("/", function(req, res, next) {
-    const { username, plantId } = req.body;
+router.delete("/:username", function(req, res, next) {
+    const username = String(req.params.username);
+    const plant = req.body;
 
     let plantCollection, plants;
     database.open(dbName, collectionName)
@@ -124,11 +128,11 @@ router.delete("/", function(req, res, next) {
         })
         .then(user => {
             plants = user.plants;
-            const plantToRemove = plants.find(element => element._id === plantId);
+            const plantToRemove = plants.find(element => element.scientificName === plant.scientificName);
             const indexToRemove = plants.indexOf(plantToRemove);
             if (indexToRemove < 0) {
                 return res.status(422).send({
-                    error: "No plant matching the given plantId could be found." 
+                    error: "No matching plant could be found." 
                 });
             } 
             plants.splice(indexToRemove, 1);
@@ -164,9 +168,9 @@ router.delete("/", function(req, res, next) {
  * 
  * @returns (200) plant - the plant object matching the given plantId
  */
-router.get("/:id", function(req, res, next) {
+router.get("/:username/:id", function(req, res, next) {
+    const username = String(req.params.username);
     const plantId = Number(req.params.id);
-    const { username } = req.body;
 
     database.open(dbName, collectionName)
         .then(collection => collection.findOne({ username }))
