@@ -19,7 +19,7 @@ class SetTimeToWaterView: AYUIView {
     lazy var whiteView = UIView()
     var model: Plant? {
         didSet{
-            plantIcon.image = UIImage(named: "plant-\(model!.pictureName)")
+            plantIcon.image = UIImage(named: model!.pictureName)
         }
     }
     lazy var searchBar: UITextField = {
@@ -38,9 +38,9 @@ class SetTimeToWaterView: AYUIView {
     override func setupView(){
         backgroundColor = .clear
         whiteView.setSuperview(self).addBottom().addRight().addLeft().addTop(anchor: centerYAnchor, constant: -100).addCorners(30).setColor(.white)
+        
         //MARK: plantIcon Constraints
-        plantIcon.setSuperview(self).addBottom(anchor: whiteView.topAnchor, constant: 40).addHeight(withConstant: 150).addWidth(withConstant: 150).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        plantIcon.image = UIImage(named: "plant-empty")
+        plantIcon.setSuperview(self).addBottom(anchor: whiteView.topAnchor, constant: 40).addHeight(withConstant: 200).addWidth(withConstant: 150).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
         let searchView = UIView()
         searchView.setSuperview(self).addLeft(constant: 30).addRight(constant: -30).addTop(anchor: plantIcon.bottomAnchor, constant: 10).addHeight(withConstant: 50).addCorners(25).done()

@@ -161,7 +161,7 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
             if(plants[indexPath.item].recieveNotification) {
                 collectionCell.imageView.image = UIImage(named: "selected")
             } else {
-                collectionCell.imageView.image = UIImage(named: "selected")
+                collectionCell.imageView.image = UIImage(named: "hollow")
             }
             collectionCell.imageView.isHidden = false
         } else {
@@ -224,9 +224,32 @@ protocol AddPlantDelegate {
 extension TerrariumViewController: WaterButtonDelegate {
     func pressedButtonAt(_ index: Int) {
         print(index)
+        guard let cell = self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? TerrariumCollectionViewCell else {
+            print("returning")
+            return
+        }
+
+        UIView.animate(withDuration: 0.4, animations: {
+            cell.waterButton.transform = CGAffineTransform(translationX: 0, y: 50)
+        }, completion: { (val) in
+            cell.waterImage.image = UIImage(named: "drop-finish")
+
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.waterButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.2)
+                cell.waterButton.alpha = 0
+            }, completion: { (val) in
+                cell.waterImage.image = UIImage(named: "waterdrop")
+                cell.waterButton.alpha = 1
+                self.collectionView.reloadData()
+                cell.waterButton.transform = CGAffineTransform(translationX: 0, y: 0)
+                cell.waterButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+
+            })
+        })
         plants[index].nextWaterDate = Date().addingTimeInterval(TimeInterval(exactly: plants[index].wateringInterval)!)
-        CreateNotification.schedule(for: plants[index])
-        collectionView.reloadData()
+        if(plants[index].recieveNotification) {
+            CreateNotification.schedule(for: plants[index])
+        }
     }
 }
 

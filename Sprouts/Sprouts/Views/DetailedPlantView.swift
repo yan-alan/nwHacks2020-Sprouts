@@ -16,7 +16,7 @@ class DetailedPlantView: AYUIView {
         image.layer.masksToBounds = true
         image.layer.borderWidth = 0
         
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleAspectFit
         image.clipsToBounds = true
         
         image.translatesAutoresizingMaskIntoConstraints = false

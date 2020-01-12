@@ -38,16 +38,19 @@ class SetTimeToWaterViewController: UIViewController, UITextFieldDelegate {
                 }
                 return false
             }
+            if(textField.text == "") {
+                addButton.userDefinedConstraintDict["height"]?.constant = 50
+                UIView.animate(withDuration: 0.4) {
+                    self.view.layoutIfNeeded()
+                }
+            } 
         }
-        if(textField.text == "" || textField.text == nil) {
-            addButton.userDefinedConstraintDict["height"]?.constant = 0
-            UIView.animate(withDuration: 0.4) {
-                self.view.layoutIfNeeded()
-            }
-        } else {
-            addButton.userDefinedConstraintDict["height"]?.constant = 50
-            UIView.animate(withDuration: 0.4) {
-                self.view.layoutIfNeeded()
+        else {
+            if(textField.text?.count == 1) {
+                addButton.userDefinedConstraintDict["height"]?.constant = 0
+                UIView.animate(withDuration: 0.4) {
+                    self.view.layoutIfNeeded()
+                }
             }
         }
         return true
@@ -62,41 +65,8 @@ class SetTimeToWaterViewController: UIViewController, UITextFieldDelegate {
     @objc func setPlantModel() {
         model.wateringInterval = Int(textField.text!)!
         
-        let iconName = createImageName(model)
-        model.pictureName = iconName
-        
         terrariumDelegate!.addToPlantsArray(data: model)
         self.dismiss(animated: true, completion: nil)
     }
     
-    func createImageName(_ model: Plant) -> String {
-        var plantDictionary: [String: String]
-        plantDictionary = ["Helianthus": "sunflower"]
-        plantDictionary["Eriophyllum"] = "sunflower"
-        
-        plantDictionary["Phyllostachys"] = "bamboo"
-        plantDictionary["Bambusa"] = "bamboo"
-        
-        plantDictionary["Tulipa"] = "tulip"
-        plantDictionary["Moraea"] = "tulip"
-        
-        plantDictionary["Aloe"] = "aloe"
-        
-        let plantScienceName = model.scientificName
-        var iconSuffix = "default"
-        
-        for (key, value) in plantDictionary {
-            if (plantScienceName.contains(key)) {
-                iconSuffix = value
-                break;
-            }
-        }
-        
-        var iconName = "plant-"
-        iconName.append(iconSuffix)
-        
-        print(iconName)
-        
-        return iconName
-    }
 }
