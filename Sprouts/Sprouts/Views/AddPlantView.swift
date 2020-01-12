@@ -7,153 +7,57 @@
 //
 
 import UIKit
+import AlanYanHelpers
 
+class AddPlantView: AYUIView {
+    
+    lazy var plantIcon = ContentFitImageView()
 
-class AddPlantView: UIView {
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = "Name"
-        label.font = UIFont.boldSystemFont(ofSize: 25)
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        
-        return label
-    }()
-    
+    lazy var searchButton = UIButton()
 
-    
-    lazy var plantIcon: UIImageView = {
-        let image = UIImageView()
-        
-        image.layer.masksToBounds = true
-        image.layer.borderWidth = 2.0
-        
-        image.contentMode = .scaleAspectFill
-        image.clipsToBounds = true
-        
-        image.translatesAutoresizingMaskIntoConstraints = false
-        
-        image.backgroundColor = .purple
-        
-        return image
-    }()
-    
-    lazy var searchButton: UIButton = {
-        let button = UIButton()
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Search", for: .normal)
-        button.backgroundColor = UIColor.black
-        button.setTitleColor(UIColor.white, for: .normal)
-        
-        return button
-    }()
-    
-    lazy var testButton: UIButton = {
-        let button = UIButton()
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Test", for: .normal)
-        button.backgroundColor = UIColor.black
-        button.setTitleColor(UIColor.white, for: .normal)
-        
-        return button
-    }()
-    
-    lazy var dismissButton: UIButton = {
-        let button = UIButton()
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Dismiss", for: .normal)
-        button.backgroundColor = UIColor.black
-        button.setTitleColor(UIColor.white, for: .normal)
-        
-        return button
-    }()
-    
+    lazy var dismissButton = UIButton()
+
     lazy var searchBar: UITextField = {
         let textField = UITextField()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Search for a plant!"
+
+        textField.placeholder = "search for plants to add..."
         textField.text = ""
         textField.autocapitalizationType = .none
-        
-        textField.borderStyle = UITextField.BorderStyle.bezel
-        textField.textAlignment = .center
-        
+        textField.autocorrectionType = .no
+
+        textField.textAlignment = .left
+
         return textField
     }()
+
+    lazy var tableView = UITableView()
     
-    lazy var tableView: UITableView = {
-        let table = UITableView()
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.backgroundColor = .white
-        
-        return table
-    }()
+    lazy var whiteView = UIView()
+    lazy var wateringImage = ContentFitImageView()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupView(){
-        backgroundColor = .systemBackground
-        self.addSubview(titleLabel)
-        self.addSubview(plantIcon)
-        self.addSubview(searchBar)
-        self.addSubview(searchButton)
-        self.addSubview(dismissButton)
-        self.addSubview(testButton)
-        self.addSubview(tableView)
-        setupConstraints()
-    }
-    
-    //MARK: - Constraints Setup
-    private func setupConstraints(){
-        //MARK: titleLabel Constraints
-        titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
-        titleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
-        
+    override func setupView(){
+        backgroundColor = .clear
+        whiteView.setSuperview(self).addBottom().addRight().addLeft().addTop(anchor: centerYAnchor, constant: -100).addCorners(30).setColor(.white)
         //MARK: plantIcon Constraints
-        plantIcon.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 50).isActive = true
-        plantIcon.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
-        plantIcon.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        plantIcon.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        plantIcon.setSuperview(self).addBottom(anchor: whiteView.topAnchor, constant: 40).addHeight(withConstant: 150).addWidth(withConstant: 150).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        plantIcon.image = UIImage(named: "plant-empty")
+        let searchView = UIView()
+        searchView.setSuperview(self).addLeft(constant: 30).addRight(constant: -30).addTop(anchor: plantIcon.bottomAnchor, constant: 10).addHeight(withConstant: 50).addCorners(25).done()
+        searchView.layer.borderWidth = 1.5
+        searchView.layer.borderColor = UIColor.black.cgColor
         
-        //MARK: searchBar Constraints
-        searchBar.topAnchor.constraint(equalTo: plantIcon.bottomAnchor, constant: 50).isActive = true
-        searchBar.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        searchBar.leftAnchor.constraint(equalTo: leftAnchor, constant: 30).isActive = true
-        searchBar.rightAnchor.constraint(equalTo: rightAnchor, constant: -30).isActive = true
+        searchButton.setSuperview(self).addTop(anchor: searchView.topAnchor).addRight(anchor: searchView.rightAnchor).addBottom(anchor: searchView.bottomAnchor).addWidth(withConstant: 50)
+        let image = UIImageView()
+        image.setSuperview(searchButton).addConstraints(padding: 10).done()
+        image.image = UIImage(named:"magnifying-glass")
+        let plantLabel = UILabel()
+        plantLabel.setSuperview(self).addLeft(anchor: searchView.leftAnchor,constant: 20).addWidth(withConstant: 50).centerYAnchor.constraint(equalTo: searchView.topAnchor).isActive = true
+        plantLabel.textAlignment = .center
+        plantLabel.backgroundColor = .white
+        plantLabel.text = "Plant"
+        searchBar.setSuperview(self).addTop(anchor: searchView.topAnchor).addLeft(anchor: searchView.leftAnchor, constant: 20).addBottom(anchor: searchView.bottomAnchor).addRight(anchor: searchButton.leftAnchor).done()
+        tableView.setSuperview(self).addBottom().addRight(constant: -60).addLeft(constant: 40).addTop(anchor: searchView.bottomAnchor, constant: 20).done()
         
-        //MARK: searchButton Constraints
-        searchButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 50).isActive = true
-        searchButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        searchButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
-        searchButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        
-        //MARK: testButton Constraints
-        testButton.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: 50).isActive = true
-        testButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        testButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
-        testButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        
-        //MARK: Table View Constraints
-        tableView.topAnchor.constraint(equalTo: testButton.bottomAnchor, constant: 50).isActive = true
-        tableView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        tableView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
- 
-    }
+        wateringImage.setSuperview(self).addLeft(constant: 20).addRight(constant: -20).addTop(anchor: searchView.bottomAnchor, constant: 20).addBottom(anchor: safeAreaLayoutGuide.bottomAnchor, constant: -20).isHidden = true
+        }
 }

@@ -11,6 +11,11 @@ import AlanYanHelpers
 class TerrariumViewController: UIViewController {
     var collectionView: UICollectionView!
     var plants: [Plant] = []
+    var toEdit = false {
+        didSet{
+            collectionView.reloadData()
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
@@ -28,12 +33,16 @@ class TerrariumViewController: UIViewController {
                 collectionView.addSubview(imageView)
             }
         }
+        handleMyBars()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         let newView = TerrariumView()
         collectionView = newView.collectionView
-
+        for i in 0..<12 {
+            plants.append(Plant("", ""))
+        }
+        newView.notificationButton.addTarget(self, action: #selector(setEdit), for: .touchUpInside)
         newView.addButton.addTarget(self, action: #selector(presentAdd), for: .touchUpInside)
         //Collection View Delegation
         newView.collectionView.delegate = self
@@ -59,6 +68,19 @@ class TerrariumViewController: UIViewController {
         
     }
 
+    @objc func setEdit() {
+        toEdit = !toEdit
+    }
+    func handleMyBars() {
+        if(plants.count >= 3) {
+            for i in 1...(plants.count/3+1) {
+                let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
+        
+                imageView.image = UIImage(named: "shelf")
+                collectionView.addSubview(imageView)
+            }
+        }
+    }
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         switch(gesture.state) {
         case .began:
@@ -90,7 +112,7 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
            return 1
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/3.22, height: 165)
+        return CGSize(width: collectionView.frame.width/3.26, height: 165)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return plants.count
@@ -104,16 +126,26 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
         collectionCell.myWaterButtonDelegate = self
         collectionCell.waterButton.tag = indexPath.item
         print("here")
+        collectionCell.imageView.isHidden = !toEdit
         return collectionCell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let presentVC = DetailedPlantViewController()
-        
-        //presentVC.model = plants[indexPath.item]
-        present(presentVC, animated: true, completion: nil)
-        
-        //navigationController?.pushViewController(presentVC, animated: true)
+        if(toEdit) {
+            guard let cell = collectionView.cellForItem(at: indexPath) as? TerrariumCollectionViewCell else {
+                return
+            }
+            if(cell.imageView.image == UIImage(named: "hollow")) {
+                cell.imageView.image = UIImage(named: "selected")
+            } else {
+                cell.imageView.image = UIImage(named: "hollow")
+                #warning("Must do notification cancelling here")
+            }
+        } else {
+            let presentVC = DetailedPlantViewController()
+            
+            //presentVC.model = plants[indexPath.item]
+            present(presentVC, animated: true, completion: nil)
+        }
     }
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return true
@@ -128,6 +160,7 @@ extension TerrariumViewController: AddPlantDelegate {
     func appendToArray(data: Plant) {
         self.plants.append(data)
         collectionView.reloadData()
+        handleMyBars()
     }
     
 }

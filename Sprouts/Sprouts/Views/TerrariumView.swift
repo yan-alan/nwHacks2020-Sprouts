@@ -60,6 +60,7 @@ class TerrariumView: AYUIView {
 
 class TerrariumCollectionViewCell: UICollectionViewCell {
     lazy var plantImage = ContentFitImageView()
+
     var myWaterButtonDelegate: WaterButtonDelegate?
     lazy var waterButton: UIButton = {
         let button = UIButton()
@@ -80,6 +81,9 @@ class TerrariumCollectionViewCell: UICollectionViewCell {
     }
     
     
+
+    lazy var imageView = UIImageView()
+
     var model: Plant? {
         didSet{
             
@@ -106,6 +110,8 @@ class TerrariumCollectionViewCell: UICollectionViewCell {
         image.image = UIImage(named: "waterdrop")
         
         plantImage.image = UIImage(named: "plant-default")
+        imageView.setSuperview(self).addBottom(constant: -20).addWidth(withConstant: 30).addHeight(withConstant: 30).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        imageView.image = UIImage(named: "selected")
     }
 }
 
