@@ -15,6 +15,86 @@ class TerrariumView: AYUIView {
     lazy var gradientView = CAGradientLayer()
     lazy var notificationButton = UIButton()
     lazy var settingsButton = UIButton()
+    lazy var cloud1View: UIImageView = {
+        let image = UIImageView()
+        
+        image.image = UIImage(named: "cloud-1")
+        
+        image.layer.masksToBounds = true
+        image.layer.borderWidth = 0
+        
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        
+        image.translatesAutoresizingMaskIntoConstraints = false
+        
+        return image
+    }()
+    
+    lazy var cloud2View: UIImageView = {
+        let image = UIImageView()
+        
+        image.image = UIImage(named: "cloud-2")
+        
+        image.layer.masksToBounds = true
+        image.layer.borderWidth = 0
+        
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        
+        image.translatesAutoresizingMaskIntoConstraints = false
+        
+        return image
+    }()
+    
+    lazy var cloud3View: UIImageView = {
+        let image = UIImageView()
+        
+        image.image = UIImage(named: "cloud-3")
+        
+        image.layer.masksToBounds = true
+        image.layer.borderWidth = 0
+        
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        
+        image.translatesAutoresizingMaskIntoConstraints = false
+        
+        return image
+    }()
+    
+    lazy var cloud4View: UIImageView = {
+        let image = UIImageView()
+        
+        image.image = UIImage(named: "cloud-4")
+        
+        image.layer.masksToBounds = true
+        image.layer.borderWidth = 0
+        
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        
+        image.translatesAutoresizingMaskIntoConstraints = false
+        
+        return image
+    }()
+    
+    lazy var cloud5View: UIImageView = {
+        let image = UIImageView()
+        
+        image.image = UIImage(named: "cloud-2")
+        
+        image.layer.masksToBounds = true
+        image.layer.borderWidth = 0
+        
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        
+        image.translatesAutoresizingMaskIntoConstraints = false
+        
+        return image
+    }()
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -27,6 +107,10 @@ class TerrariumView: AYUIView {
         return collection
     }()
     override func setupView() {
+        self.addSubview(cloud1View)
+        self.addSubview(cloud2View)
+        self.addSubview(cloud3View)
+        self.addSubview(cloud4View)
         
         
         settingsButton.setSuperview(self).addTop(anchor: safeAreaLayoutGuide.topAnchor, constant: 4).addLeft(constant: 35).addWidth(withConstant: 36).addHeight(withConstant: 36).done()
@@ -61,7 +145,33 @@ class TerrariumView: AYUIView {
         let image = UIImage(named: "plant-small")
         let imageView2 = ContentFitImageView().setSuperview(addButton).addConstraints(padding: 5)
         imageView2.image = image
+        
+        
+        setupConstraintsWren()
     }
+    
+    func setupConstraintsWren() {
+        //MARK: cloud1 Constraints
+        cloud1View.widthAnchor.constraint(equalToConstant: 190).isActive = true
+        cloud1View.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        cloud1View.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+        cloud1View.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0).isActive = true
+        
+        
+        //MARK: cloud3 Constraints
+        cloud3View.centerXAnchor.constraint(equalTo: centerXAnchor, constant: -100).isActive = true
+        cloud3View.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 200).isActive = true
+        
+        //MARK: cloud4 Constraints
+        cloud4View.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+        cloud4View.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 150).isActive = true
+        
+        //MARK: cloud5 Constraints
+        cloud4View.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+        cloud4View.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -250).isActive = true
+        
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
     }
