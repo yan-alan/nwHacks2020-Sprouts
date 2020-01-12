@@ -29,10 +29,11 @@ router.post("/", function(req, res, next) {
                 return res.status(200).send({ 
                     message: "Plant was successfully added.", 
                     plant: plant
-                }).send();
+                });
             } else {
-                console.log("here");
-                return res.status(422).send({ error: "Could not add plant. Please try again." });
+                return res.status(422).send({
+                    error: "Could not add plant. Please try again." 
+                });
             }
         })
         .catch(err => {
