@@ -165,8 +165,8 @@ extension AddPlantViewController: UITableViewDelegate, UITableViewDataSource {
         return customCell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        terrariumDelegate?.appendToArray(data: Plant(responseArr[indexPath.row].commonName!, responseArr[indexPath.row].commonName!, wateringInterval: 60, recieveNotification: true))
         dismiss(animated: true, completion: nil)
+        terrariumDelegate?.appendToArray(data: Plant(name: responseArr[indexPath.row].commonName!, scientificName: responseArr[indexPath.row].scientificName, wateringInterval: 60, recieveNotification: true))
     }
     
     

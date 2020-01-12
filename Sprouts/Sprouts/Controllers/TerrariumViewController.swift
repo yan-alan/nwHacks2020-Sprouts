@@ -30,7 +30,7 @@ class TerrariumViewController: UIViewController {
         let newView = TerrariumView()
         collectionView = newView.collectionView
         for i in 0..<12 {
-            plants.append(Plant("", "", wateringInterval: 60, recieveNotification: true))
+            plants.append(Plant(name: "Rose", scientificName: "Quantum Deternum", wateringInterval: 60, recieveNotification: true))
         }
         if(plants.count >= 3) {
             for i in 1...plants.count/3 {
@@ -152,7 +152,7 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
         } else {
             let presentVC = DetailedPlantViewController()
             
-            //presentVC.model = plants[indexPath.item]
+            presentVC.model = plants[indexPath.item]
             present(presentVC, animated: true, completion: nil)
         }
     }
@@ -167,6 +167,12 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
 
 extension TerrariumViewController: AddPlantDelegate {
     func appendToArray(data: Plant) {
+        let newVC = SetTimeToWaterViewController()
+        newVC.model = data
+        newVC.terrariumDelegate = self
+        present(newVC, animated: true, completion: nil)
+    }
+    func addToPlantsArray(data: Plant) {
         self.plants.append(data)
         collectionView.reloadData()
         handleMyBars()
@@ -176,6 +182,7 @@ extension TerrariumViewController: AddPlantDelegate {
 
 protocol AddPlantDelegate {
     func appendToArray(data: Plant)
+    func addToPlantsArray(data: Plant)
 }
 
 extension TerrariumViewController: WaterButtonDelegate {

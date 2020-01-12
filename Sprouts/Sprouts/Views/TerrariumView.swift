@@ -66,9 +66,7 @@ class TerrariumCollectionViewCell: UICollectionViewCell {
         let button = UIButton()
         
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        
-        button.backgroundColor = .red
-        
+                
         return button
     }()
     

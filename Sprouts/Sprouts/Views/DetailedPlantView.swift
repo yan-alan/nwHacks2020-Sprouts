@@ -172,6 +172,8 @@ class DetailedPlantView: AYUIView {
     var model: Plant? {
         didSet {
             //do work in the view once the plant is set
+            plantLabel.text = model?.name
+            scienceLabel.text = model?.scientificName
         }
     }
     

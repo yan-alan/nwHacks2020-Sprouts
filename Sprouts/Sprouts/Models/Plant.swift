@@ -11,16 +11,17 @@ import Foundation
 struct Plant {
     var name: String
     var scientificName: String
-    var pictureName: String?
+    var pictureName: String
     var wateringInterval: Int
     var nextWaterDate: Date?
     var recieveNotification: Bool
     
-    init(_ name: String, _ scientificName: String, wateringInterval: Int, recieveNotification: Bool) {
+    init(name: String, scientificName: String, wateringInterval: Int, recieveNotification: Bool, pictureName: String? = "default") {
         self.name = name
         self.scientificName = scientificName
         self.wateringInterval = wateringInterval
         self.recieveNotification = recieveNotification
+        self.pictureName = pictureName!
     }
 }
 
