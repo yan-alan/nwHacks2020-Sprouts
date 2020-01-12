@@ -61,7 +61,42 @@ class SetTimeToWaterViewController: UIViewController, UITextFieldDelegate {
     }
     @objc func setPlantModel() {
         model.wateringInterval = Int(textField.text!)!
+        
+        let iconName = createImageName(model)
+        model.pictureName = iconName
+        
         terrariumDelegate!.addToPlantsArray(data: model)
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func createImageName(_ model: Plant) -> String {
+        var plantDictionary: [String: String]
+        plantDictionary = ["Helianthus": "sunflower"]
+        plantDictionary["Eriophyllum"] = "sunflower"
+        
+        plantDictionary["Phyllostachys"] = "bamboo"
+        plantDictionary["Bambusa"] = "bamboo"
+        
+        plantDictionary["Tulipa"] = "tulip"
+        plantDictionary["Moraea"] = "tulip"
+        
+        plantDictionary["Aloe"] = "aloe"
+        
+        let plantScienceName = model.scientificName
+        var iconSuffix = "default"
+        
+        for (key, value) in plantDictionary {
+            if (plantScienceName.contains(key)) {
+                iconSuffix = value
+                break;
+            }
+        }
+        
+        var iconName = "plant-"
+        iconName.append(iconSuffix)
+        
+        print(iconName)
+        
+        return iconName
     }
 }
