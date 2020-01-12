@@ -12,7 +12,7 @@ import UIKit
 class AddPlantViewController: UIViewController, UITextFieldDelegate {
     var newView: AddPlantView!
     var tableView: UITableView!
-    var responseArr: SearchResults?
+    var responseArr: SearchResults = []
     var terrariumDelegate: AddPlantDelegate?
     
     override func viewDidLoad() {
@@ -95,7 +95,12 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
                         
                         if requestType == RequestType.searchPlants {
                             if let data = searchData {
-                                self.responseArr = data
+                                self.responseArr = []
+                                for element in data {
+                                    self.responseArr.append(element)
+                                }
+                                
+                                self.tableView.reloadData()
                             }
                         } else if requestType == RequestType.getFromID {
                             if let data = plantData {
@@ -120,7 +125,7 @@ extension AddPlantViewController: UITableViewDelegate, UITableViewDataSource {
         return 62
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return responseArr.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -129,8 +134,8 @@ extension AddPlantViewController: UITableViewDelegate, UITableViewDataSource {
             print("returning cell")
             return cell
         }
-        customCell.scientificName.text = "Jogn"
-        customCell.commonName.text = "James"
+        customCell.scientificName.text = responseArr[indexPath.row].scientificName
+        customCell.commonName.text = responseArr[indexPath.row].commonName
         return customCell
         
     }
