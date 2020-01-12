@@ -14,6 +14,8 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     var tableView: UITableView!
     var responseArr: SearchResults = []
     var terrariumDelegate: AddPlantDelegate?
+    var waterImageView: UIImageView!
+    private var waterCount = 1
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
@@ -21,21 +23,34 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
         
         newView = AddPlantView()
         tableView = newView.tableView
+        waterImageView = newView.wateringImage
 //        self.isModalInPresentation = true
         tableView.separatorStyle = .singleLine
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(PlantTableViewCell.self, forCellReuseIdentifier: "cell")
         newView.searchButton.addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
         newView.dismissButton.addTarget(self, action: #selector(dismissPressed), for: .touchUpInside)
         
         newView.searchBar.delegate = self
         //setup view, add self as action target
-        
+        reloadTableView()
         self.view = newView
         let tap = UITapGestureRecognizer(target: self, action: #selector(tappedOutside))
             tap.cancelsTouchesInView = false
             view.addGestureRecognizer(tap)
+        
+        let _ = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(cycleImage), userInfo: nil, repeats: true)
+    }
+    func reloadTableView() {
+        if(responseArr.count == 0) {
+            tableView.isHidden = true
+        } else {
+            waterImageView.isHidden = true
+            tableView.isHidden = false
+            tableView.reloadData()
+        }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
@@ -63,13 +78,22 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     @objc func testPressed() {
         if let searchText = newView.searchBar.text {
             print("Getting plant with ID \(searchText)")
+            
             callAPI(queryPhrase: searchText, requestType: RequestType.getFromID)
             
         }
     }
-    
+    @objc func cycleImage() {
+        waterImageView.image = UIImage(named: "watering-\(waterCount)")
+        waterCount += 1
+        if waterCount > 6 {
+            waterCount = 1
+        }
+    }
     func callAPI(queryPhrase: String, requestType: RequestType) {
-        
+        tableView.isHidden = true
+        waterCount = 1
+        waterImageView.isHidden = false
         let url = NetworkUtil.makeURL(query: queryPhrase, request: requestType)
         if let apiURL = url {
             print(apiURL)
@@ -97,7 +121,7 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
                                 return
                             }
                             self.responseArr = data
-                            self.tableView.reloadData()
+                            self.reloadTableView()
                             
                         case .getFromID:
                             if let data = plantData {

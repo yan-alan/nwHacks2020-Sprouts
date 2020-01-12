@@ -17,23 +17,15 @@ class TerrariumViewController: UIViewController {
         collectionView.addGestureRecognizer(longPressGesture)
         collectionView.reloadData()
         print("pls")
-        for i in 0..<12 {
-            plants.append(Plant("", ""))
-        }
-        if(plants.count >= 3) {
-            for i in 1...(plants.count/3+1) {
-                let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
-        
-                imageView.image = UIImage(named: "shelf")
-                collectionView.addSubview(imageView)
-            }
-        }
+        handleMyBars()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         let newView = TerrariumView()
         collectionView = newView.collectionView
-
+        for i in 0..<12 {
+            plants.append(Plant("", ""))
+        }
         newView.addButton.addTarget(self, action: #selector(presentAdd), for: .touchUpInside)
         //Collection View Delegation
         newView.collectionView.delegate = self
@@ -47,7 +39,16 @@ class TerrariumViewController: UIViewController {
         
         self.view = newView
     }
-
+    func handleMyBars() {
+        if(plants.count >= 3) {
+            for i in 1...(plants.count/3+1) {
+                let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
+        
+                imageView.image = UIImage(named: "shelf")
+                collectionView.addSubview(imageView)
+            }
+        }
+    }
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         switch(gesture.state) {
         case .began:
@@ -115,6 +116,7 @@ extension TerrariumViewController: AddPlantDelegate {
     func appendToArray(data: Plant) {
         self.plants.append(data)
         collectionView.reloadData()
+        handleMyBars()
     }
     
 }
