@@ -25,9 +25,15 @@ router.post("/", function(req, res, next) {
       doesUserExist(username, password)
         .then(userExists => {
           if (userExists) {
-            res.status(200).send({ message: "Successfully logged in!" });
+            res.status(200).send({ 
+              message: "Successfully logged in!",
+              loginSuccess: true,
+            });
           } else {
-            res.status(404).json({ error: "Could not find a user that matches the given username or password" });
+            res.status(200).json({ 
+              error: "Could not find a user that matches the given username or password",
+              loginSuccess: false,
+            });
           }
         })
         .catch((err) => {
