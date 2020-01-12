@@ -150,7 +150,7 @@ class AddPlantView: UIView {
         testButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
         
         //MARK: Table View Constraints
-        tableView.topAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: testButton.bottomAnchor, constant: 50).isActive = true
         tableView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true

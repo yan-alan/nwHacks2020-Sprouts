@@ -129,10 +129,10 @@ extension AddPlantViewController: UITableViewDelegate, UITableViewDataSource {
             print("returning cell")
             return cell
         }
+        
         customCell.scientificName.text = responseArr[indexPath.row].scientificName
         customCell.commonName.text = responseArr[indexPath.row].commonName
         return customCell
-        
     }
     
     
