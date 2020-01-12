@@ -18,9 +18,8 @@ class TerrariumViewController: UIViewController {
             collectionView.reloadData()
         }
     }
-    
     var skView: SKView?
-    
+    var gradientView: CAGradientLayer!
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
@@ -52,8 +51,10 @@ class TerrariumViewController: UIViewController {
                 collectionView.addSubview(imageView)
             }
         }
+        gradientView = newView.gradientView
         newView.notificationButton.addTarget(self, action: #selector(setEdit), for: .touchUpInside)
         newView.addButton.addTarget(self, action: #selector(presentAdd), for: .touchUpInside)
+        newView.settingsButton.addTarget(self, action: #selector(presentSettings), for: .touchUpInside)
         //Collection View Delegation
         newView.collectionView.delegate = self
         newView.collectionView.dataSource = self
@@ -123,6 +124,11 @@ class TerrariumViewController: UIViewController {
     @objc func presentAdd() {
         let pushVC = AddPlantViewController()
         pushVC.terrariumDelegate = self
+        present(pushVC, animated: true, completion: nil)
+    }
+    @objc func presentSettings() {
+        let pushVC = SettingsViewController()
+        pushVC.delegate = self
         present(pushVC, animated: true, completion: nil)
     }
 }
@@ -369,7 +375,14 @@ extension TerrariumViewController: WaterButtonDelegate {
         }
     }
 }
-
+extension TerrariumViewController: ChangeColourDelegate {
+    func changedColour(_ colours: [CGColor]) {
+        gradientView.colors = colours
+    }
+}
+protocol ChangeColourDelegate {
+    func changedColour(_ colours: [CGColor])
+}
 protocol WaterButtonDelegate {
     func pressedButtonAt(_ index: Int)
 }

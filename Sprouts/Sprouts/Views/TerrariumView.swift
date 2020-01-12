@@ -15,7 +15,6 @@ class TerrariumView: AYUIView {
     lazy var gradientView = CAGradientLayer()
     lazy var notificationButton = UIButton()
     lazy var settingsButton = UIButton()
-    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -39,7 +38,16 @@ class TerrariumView: AYUIView {
         gradientView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradientView.colors = [UIColor(hex: 0xE5E8F3).cgColor, UIColor(hex: 0x788FD5).cgColor]
+        let colour = UserDefaults.standard.integer(forKey: "colour1")
+
+        if colour == 0 {
+            gradientView.colors = [UIColor(hex: 0xCFD9FF).cgColor, UIColor(hex: 0x4569D2).cgColor]
+        } else if colour == 1 {
+            gradientView.colors = [UIColor(hex: 0xFFD258).cgColor, UIColor(hex: 0xFFB496).cgColor]
+        } else {
+            gradientView.colors = [UIColor(hex: 0xFFF2CE).cgColor, UIColor(hex: 0xFFD258).cgColor]
+        }
+    
         layer.insertSublayer(gradientView, at: 0)
         bottomView.setColor(.white)
         bottomView.clipsToBounds = true
