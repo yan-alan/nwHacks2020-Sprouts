@@ -58,10 +58,6 @@ class TerrariumViewController: UIViewController {
         newView.collectionView.delegate = self
         newView.collectionView.dataSource = self
         newView.collectionView.register(TerrariumCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        #warning("Must change this to stored data!")
-        for _ in 0..<12 {
-         //   plants.append()
-        }
         print("here")
         
         newView.settingsButton.addTarget(self, action: #selector(testLogin), for: .touchUpInside)
@@ -186,7 +182,7 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
             if(plants[indexPath.item].recieveNotification) {
                 collectionCell.imageView.image = UIImage(named: "selected")
             } else {
-                collectionCell.imageView.image = UIImage(named: "selected")
+                collectionCell.imageView.image = UIImage(named: "hollow")
             }
             collectionCell.imageView.isHidden = false
         } else {
@@ -209,7 +205,8 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
             }
         } else {
             let presentVC = DetailedPlantViewController()
-            
+            presentVC.storedIndex = indexPath.item
+            presentVC.delegate = self
             presentVC.model = plants[indexPath.item]
             present(presentVC, animated: true, completion: nil)
         }
@@ -220,6 +217,9 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("Changing the cell order, moving: \(sourceIndexPath.row) to \(destinationIndexPath.row)")
         #warning("Need to modify list after")
+        let item = plants[sourceIndexPath.item]
+        plants.remove(at: sourceIndexPath.item)
+        plants.insert(item, at: destinationIndexPath.item)
     }
 }
 
@@ -238,12 +238,16 @@ extension TerrariumViewController: AddPlantDelegate {
         collectionView.reloadData()
         handleMyBars()
     }
+    func deletePlant(index: Int) {
+        plants.remove(at: index)
+        collectionView.reloadData()
+    }
     
 }
-
 protocol AddPlantDelegate {
     func appendToArray(data: Plant)
     func addToPlantsArray(data: Plant)
+    func deletePlant(index: Int)
 }
 
 extension TerrariumViewController: WaterButtonDelegate {
@@ -272,7 +276,9 @@ extension TerrariumViewController: WaterButtonDelegate {
             })
         })
         plants[index].nextWaterDate = Date().addingTimeInterval(TimeInterval(exactly: plants[index].wateringInterval)!)
-        CreateNotification.schedule(for: plants[index])
+        if(plants[index].recieveNotification) {
+            CreateNotification.schedule(for: plants[index])
+        }
     }
 }
 
