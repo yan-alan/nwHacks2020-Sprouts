@@ -10,9 +10,13 @@ import UIKit
 
 class DetailedPlantViewController: UIViewController {
     var model: Plant!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let newView = DetailedPlantView()
+        
+        newView.plantIcon.image = UIImage(named: model.pictureName)
+        
         newView.model = model
         self.view = newView
     }

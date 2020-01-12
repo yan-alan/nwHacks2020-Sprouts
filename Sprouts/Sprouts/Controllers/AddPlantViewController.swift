@@ -138,6 +138,8 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+    
 
     
 }
@@ -166,9 +168,45 @@ extension AddPlantViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true, completion: nil)
-        terrariumDelegate?.appendToArray(data: Plant(name: responseArr[indexPath.row].commonName!, scientificName: responseArr[indexPath.row].scientificName, wateringInterval: 60, recieveNotification: true))
+        var newPlant = Plant(name: responseArr[indexPath.row].commonName!, scientificName: responseArr[indexPath.row].scientificName, wateringInterval: 60, recieveNotification: true)
+        newPlant.pictureName = self.createImageName(newPlant)
+        
+        terrariumDelegate?.appendToArray(data: newPlant)
     }
     
     
+}
+
+extension AddPlantViewController {
+    func createImageName(_ model: Plant) -> String {
+        var plantDictionary: [String: String]
+        plantDictionary = ["Helianthus": "sunflower"]
+        plantDictionary["Eriophyllum"] = "sunflower"
+        
+        plantDictionary["Phyllostachys"] = "bamboo"
+        plantDictionary["Bambusa"] = "bamboo"
+        
+        plantDictionary["Tulipa"] = "tulip"
+        plantDictionary["Moraea"] = "tulip"
+        
+        plantDictionary["Aloe"] = "aloe"
+        
+        let plantScienceName = model.scientificName
+        var iconSuffix = "default"
+        
+        for (key, value) in plantDictionary {
+            if (plantScienceName.contains(key)) {
+                iconSuffix = value
+                break;
+            }
+        }
+        
+        var iconName = "plant-"
+        iconName.append(iconSuffix)
+        
+        print(iconName)
+        
+        return iconName
+    }
 }
     
