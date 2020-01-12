@@ -10,7 +10,7 @@ import UIKit
 
 class TerrariumViewController: UIViewController {
     var collectionView: UICollectionView!
-    var plants: [Plant] = []
+    var plants: [DetailPlantData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         let newView = TerrariumView()
@@ -23,7 +23,7 @@ class TerrariumViewController: UIViewController {
         newView.collectionView.register(TerrariumCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         #warning("Must change this to stored data!")
         for _ in 0..<12 {
-            plants.append(Plant())
+            //plants.append(Plant())
         }
         print("here")
         
@@ -53,6 +53,7 @@ class TerrariumViewController: UIViewController {
     
     @objc func presentAdd() {
         let pushVC = AddPlantViewController()
+        pushVC.terrariumDelegate = self
         present(pushVC, animated: true, completion: nil)
     }
 }
@@ -94,6 +95,19 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
     }
 }
 
+extension TerrariumViewController: AddPlantDelegate {
+    func appendToArray(data: DetailPlantData) {
+        self.plants.append(data)
+        print("appending data")
+    }
+    
+}
+
+
+protocol AddPlantDelegate {
+    func appendToArray(data: DetailPlantData)
+}
+
 
 import SwiftUI
 
@@ -115,5 +129,7 @@ struct ControllerPreview: PreviewProvider {
         }
     }
 }
+
+
 
 
