@@ -6,6 +6,14 @@ const router = express.Router();
 const dbName = "Users";
 const collectionName = "Users";
 
+/**
+ * GET /api/users/
+ * 
+ * @param {string} username - the user's username
+ * @param {string} password - the user's password
+ * 
+ * @returns (200) message - login was successful
+ */
 router.get("/", function(req, res, next) {
   const { username, password } = req.body;
 
@@ -26,6 +34,14 @@ router.get("/", function(req, res, next) {
   } 
 });
 
+/**
+ * POST /api/users/
+ * 
+ * @param {string} username - the user's username
+ * @param {string} password - the user's password
+ * 
+ * @returns (201) message - user creation was successful
+ */
 router.post("/", function(req, res, next) {
   const { username, password } = req.body;
 
