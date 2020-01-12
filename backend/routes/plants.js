@@ -26,8 +26,7 @@ router.post("/", function(req, res, next) {
             );
         })
         .then(writeResult => {
-            const nModified = writeResult.result.nModified;
-            if (nModified > 0) {
+            if (writeResult.matchedCount > 0) {
                 return res.status(200).send({ 
                     message: "Plant was successfully added.", 
                     plant: plant
@@ -46,13 +45,13 @@ router.put("/", function(req, res, next) {
 
     let plantCollection, newPlants;
     database.open(dbName, collectionName)
-        .then(async collection => {
+        .then(collection => {
             plantCollection = collection;
             return collection.findOne({ username });
         })
         .then(user => {
             newPlants = user.plants.map(element => {
-                return element._id === plant._id ? plant : element
+                return element._id === plant._id ? plant : element;
             });
             return plantCollection.updateOne(
                 { username: username },
@@ -60,8 +59,7 @@ router.put("/", function(req, res, next) {
             );
         })
         .then(writeResult => {
-            const matchedCount = writeResult.matchedCount;
-            if (matchedCount > 0) {
+            if (writeResult.matchedCount > 0) {
                 return res.status(200).send({
                     message: "Plant was successfully updated.",
                     plants: newPlants
@@ -76,7 +74,42 @@ router.put("/", function(req, res, next) {
 });
 
 router.delete("/", function(req, res, next) {
-    
+    const { username, plantId } = req.body;
+
+    let userCollection, plants;
+    database.open(dbName, collectionName)
+        .then(collection => {
+            userCollection = collection;
+            return collection.findOne({ username });
+        })
+        .then(user => {
+            plants = user.plants;
+            const plantToRemove = plants.find(element => element._id === plantId);
+            const indexToRemove = plants.indexOf(plantToRemove);
+            if (indexToRemove < 0) {
+                return res.status(422).send({
+                    error: "No plant matching the given plantId could be found." 
+                });
+            } 
+            plants.splice(indexToRemove, 1);
+            return userCollection.replaceOne(
+                { username: username }, 
+                { user }
+            );
+        })
+        .then(writeResult => {
+            if (writeResult.matchedCount > 0) {
+                return res.status(200).send({
+                    message: "Plant was successfully deleted.",
+                    plants: plants
+                });
+            } else { 
+                return res.status(422).send({
+                    error: "Could not delete plant. Please try again." 
+                });
+            }
+        })
+        .catch(err => res.status(404).send({ error: err }));
 });
 
 router.get("/:id", function(req, res, next) {
