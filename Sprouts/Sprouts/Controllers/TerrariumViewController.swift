@@ -7,10 +7,28 @@
 //
 
 import UIKit
-
+import AlanYanHelpers
 class TerrariumViewController: UIViewController {
     var collectionView: UICollectionView!
     var plants: [Plant] = []
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
+        collectionView.addGestureRecognizer(longPressGesture)
+        collectionView.reloadData()
+        print("pls")
+        for i in 0..<12 {
+            plants.append(Plant("", ""))
+        }
+        if(plants.count >= 3) {
+            for i in 1...plants.count/3 {
+                let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
+        
+                imageView.image = UIImage(named: "shelf")
+                collectionView.addSubview(imageView)
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         let newView = TerrariumView()
@@ -28,11 +46,6 @@ class TerrariumViewController: UIViewController {
         print("here")
         
         self.view = newView
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
-        collectionView.addGestureRecognizer(longPressGesture)
-        collectionView.reloadData()
     }
 
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
@@ -66,10 +79,10 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
            return 1
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+        return CGSize(width: collectionView.frame.width/3.22, height: 165)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return plants.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
