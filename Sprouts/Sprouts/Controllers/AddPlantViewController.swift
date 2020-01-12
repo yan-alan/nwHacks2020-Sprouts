@@ -28,7 +28,6 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
         tableView.register(PlantTableViewCell.self, forCellReuseIdentifier: "cell")
         newView.searchButton.addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
         newView.dismissButton.addTarget(self, action: #selector(dismissPressed), for: .touchUpInside)
-        newView.testButton.addTarget(self, action: #selector(testPressed), for: .touchUpInside)
         
         newView.searchBar.delegate = self
         //setup view, add self as action target
