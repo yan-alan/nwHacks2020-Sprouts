@@ -11,6 +11,11 @@ import AlanYanHelpers
 class TerrariumViewController: UIViewController {
     var collectionView: UICollectionView!
     var plants: [Plant] = []
+    var toEdit = false {
+        didSet{
+            collectionView.reloadData()
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
@@ -80,7 +85,7 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
            return 1
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/3.22, height: 165)
+        return CGSize(width: collectionView.frame.width/3.26, height: 165)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return plants.count
@@ -90,6 +95,11 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         guard let collectionCell = cell as? TerrariumCollectionViewCell else {
             return cell
+        }
+        if(toEdit) {
+            
+        } else {
+            
         }
         print("here")
         return collectionCell
