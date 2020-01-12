@@ -51,7 +51,7 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
         
         if let searchText = newView.searchBar.text {
             print("Search for \(searchText)")
-            self.callAPI(queryPhrase: searchText, requestType: RequestType.searchPlants)
+            callAPI(queryPhrase: searchText, requestType: RequestType.searchPlants)
         }
         
         
@@ -65,7 +65,7 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     @objc func testPressed() {
         if let searchText = newView.searchBar.text {
             print("Getting plant with ID \(searchText)")
-            self.callAPI(queryPhrase: searchText, requestType: RequestType.getFromID)
+            callAPI(queryPhrase: searchText, requestType: RequestType.getFromID)
             
         }
     }
@@ -73,7 +73,6 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     func callAPI(queryPhrase: String, requestType: RequestType) {
         
         let url = NetworkUtil.makeURL(query: queryPhrase, request: requestType)
-        print(url)
         if let apiURL = url {
             let dataTask = URLSession.shared.dataTask(with: apiURL) {
                 (data, response, error) in
@@ -96,10 +95,7 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
                             guard let data = searchData else {
                                 return
                             }
-                            print(data.count)
-
                             self.responseArr = data
-                            print(self.responseArr.count)
                             self.tableView.reloadData()
                             
                         case .getFromID:
@@ -111,7 +107,6 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             }
-            
             dataTask.resume()
         }
         
