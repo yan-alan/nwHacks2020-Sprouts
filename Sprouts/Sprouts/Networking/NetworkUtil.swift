@@ -17,7 +17,7 @@ class NetworkUtil {
         if (request == RequestType.searchPlants) {
             var searchURL = ""
             searchURL.append(baseURLString)
-            searchURL.append("plants?=")
+            searchURL.append("plants?q=")
             searchURL.append(query)
             searchURL.append("&token=")
             searchURL.append(token)
