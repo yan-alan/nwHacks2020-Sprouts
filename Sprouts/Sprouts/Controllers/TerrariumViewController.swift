@@ -10,18 +10,45 @@ import UIKit
 
 class TerrariumViewController: UIViewController {
     var collectionView: UICollectionView!
+    var plants: [Plant] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         let newView = TerrariumView()
         collectionView = newView.collectionView
+
         newView.addButton.addTarget(self, action: #selector(presentAdd), for: .touchUpInside)
         //Collection View Delegation
         newView.collectionView.delegate = self
         newView.collectionView.dataSource = self
         newView.collectionView.register(TerrariumCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        #warning("Must change this to stored data!")
+        for _ in 0..<12 {
+            plants.append(Plant())
+        }
         print("here")
         
         self.view = newView
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
+        collectionView.addGestureRecognizer(longPressGesture)
+        collectionView.reloadData()
+    }
+
+    @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+        switch(gesture.state) {
+        case .began:
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+        case .ended:
+            collectionView.endInteractiveMovement()
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
     }
     
     @objc func presentAdd() {
@@ -30,12 +57,18 @@ class TerrariumViewController: UIViewController {
     }
 }
 
-extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+           
+           // 1
+           // return the number of sections
+           return 1
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+        return plants.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -49,12 +82,16 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let presentVC = DetailedPlantViewController()
-        presentVC.model = Plant()
-        #warning("Need to give a proper model")
+        presentVC.model = plants[indexPath.item]
         navigationController?.pushViewController(presentVC, animated: true)
     }
-    
-    
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print("Changing the cell order, moving: \(sourceIndexPath.row) to \(destinationIndexPath.row)")
+        #warning("Need to modify list after")
+    }
 }
 
 
