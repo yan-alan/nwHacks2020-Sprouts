@@ -68,6 +68,7 @@ class SetTimeToWaterViewController: UIViewController, UITextFieldDelegate {
         model.wateringInterval = Int(textField.text!)!
         
         terrariumDelegate!.addToPlantsArray(data: model)
+        
         self.dismiss(animated: true, completion: nil)
     }
     

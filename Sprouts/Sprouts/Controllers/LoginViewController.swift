@@ -8,8 +8,12 @@
 
 import UIKit
 
+
+
 class LoginViewController: UIViewController {
     var newView: LoginView!
+    
+    var grabPlantsDelegate: GrabPlantsDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +52,17 @@ class LoginViewController: UIViewController {
             
             if let data = data {
                 print("in data")
-                //let decodeData = try? JSONDecoder().decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: data)
+                let decodeData = try? JSONDecoder().decode(LoginResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    if (decodeData?.loginSuccess ?? false) {
+                        self.grabPlantsDelegate?.grabPlants()
+                        self.dismiss(animated: true, completion: {})
+                    } else {
+                        print("login failed")
+                    }
+                }
+                
             }
         }
         dataTask.resume()

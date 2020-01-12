@@ -50,6 +50,7 @@ class LoginView: UIView {
         textField.placeholder = "Password"
         textField.text = ""
         textField.autocapitalizationType = .none
+        textField.isSecureTextEntry = true
         
         textField.borderStyle = UITextField.BorderStyle.bezel
         textField.textAlignment = .center

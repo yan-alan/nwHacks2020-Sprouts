@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Plant {
+struct Plant: Codable {
     var name: String
     var scientificName: String
     var pictureName: String

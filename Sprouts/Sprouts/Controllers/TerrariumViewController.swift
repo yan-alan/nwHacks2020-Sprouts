@@ -78,6 +78,8 @@ class TerrariumViewController: UIViewController {
     @objc func testLogin() {
         let modalVC = LoginViewController()
         
+        modalVC.grabPlantsDelegate = self
+        
         modalVC.modalPresentationStyle = .fullScreen
         
         self.present(modalVC, animated: true, completion: {})
@@ -237,11 +239,97 @@ extension TerrariumViewController: AddPlantDelegate {
         self.plants.append(plant)
         collectionView.reloadData()
         handleMyBars()
+        
+        sendToAndrewPost(plant)
     }
+    
+    func sendToAndrewPost(_ plant: Plant) {
+        guard let andrewURL = URL(string: "http://3.19.26.69:8000/api/plants/Wren") else {
+            return
+        }
+        
+        var postRequest = URLRequest(url: andrewURL)
+        postRequest.httpMethod = "POST"
+        postRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let encodedPlants = try? JSONEncoder().encode(plant)
+        
+        postRequest.httpBody = encodedPlants!
+        print("encoded json: ")
+        print("\(String(bytes: encodedPlants!, encoding: .utf8))")
+        
+        let dataTask = URLSession.shared.dataTask(with: postRequest) {
+            (data, response, error) in
+            if let error = error {
+                print("in error post")
+                print(error)
+            } else if let response = response {
+                print("post response:")
+                //print(response)
+            }
+            
+            if let data = data {
+                print("in data post")
+                let decodeData = try? JSONDecoder().decode(PostResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    print(decodeData)
+                }
+                
+            }
+        }
+        
+        dataTask.resume()
+    }
+    
+    
+    
     func deletePlant(index: Int) {
+        sendToAndrewDelete(plants[index])
         plants.remove(at: index)
         collectionView.reloadData()
     }
+    
+    func sendToAndrewDelete(_ plant: Plant) {
+        guard let andrewURL = URL(string: "http://3.19.26.69:8000/api/plants/Wren") else {
+            return
+        }
+        
+        var postRequest = URLRequest(url: andrewURL)
+        postRequest.httpMethod = "DELETE"
+        postRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let encodedPlants = try? JSONEncoder().encode(plant)
+        
+        postRequest.httpBody = encodedPlants!
+        print("encoded json: ")
+        print("\(String(bytes: encodedPlants!, encoding: .utf8))")
+        
+        let dataTask = URLSession.shared.dataTask(with: postRequest) {
+            (data, response, error) in
+            if let error = error {
+                print("in error post")
+                print(error)
+            } else if let response = response {
+                //print("in response post")
+                //print(response)
+            }
+            
+            if let data = data {
+                print("in data post")
+                let decodeData = try? JSONDecoder().decode(DeleteResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    print(decodeData)
+                }
+                
+            }
+        }
+        
+        dataTask.resume()
+    }
+    
+    
     
 }
 protocol AddPlantDelegate {
@@ -290,6 +378,49 @@ extension TerrariumViewController {
     func newWaterEmitter() -> SKEmitterNode? {
         return SKEmitterNode(fileNamed: "WaterParticles")
     }
+}
+
+extension TerrariumViewController: GrabPlantsDelegate {
+    func grabPlants() {
+        guard let andrewURL = URL(string: "http://3.19.26.69:8000/api/plants/Wren") else {
+            return
+        }
+        
+        var getRequest = URLRequest(url: andrewURL)
+        getRequest.httpMethod = "GET"
+        
+        
+        let dataTask = URLSession.shared.dataTask(with: getRequest) {
+            (data, response, error) in
+            if let error = error {
+                print("in error")
+                print(error)
+            } else if let response = response {
+                print("in response")
+                print(response)
+            }
+            
+            if let data = data {
+                print("in data")
+                let decodeData = try? JSONDecoder().decode(GetAllPlantsResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    if let serverData = decodeData {
+                        self.plants = serverData.plants
+                        self.collectionView.reloadData()
+                        print(self.plants)
+                    }
+                }
+                
+            }
+        }
+        
+        dataTask.resume()
+    }
+}
+
+protocol GrabPlantsDelegate {
+    func grabPlants()
 }
 
 import SwiftUI

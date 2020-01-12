@@ -7,3 +7,24 @@
 //
 
 import Foundation
+
+struct LoginResponse: Codable {
+    let message: String
+    let loginSuccess: Bool
+}
+
+
+struct PostResponse: Codable {
+    let message: String
+    let plant: Plant
+}
+
+
+struct DeleteResponse: Codable {
+    let message: String
+    let plants: [Plant]
+}
+
+struct GetAllPlantsResponse: Codable {
+    let plants: [Plant]
+}
