@@ -12,6 +12,8 @@ import AlanYanHelpers
 class TerrariumView: AYUIView {
     lazy var bottomView = UIView()
     lazy var addButton = UIButton()
+    lazy var gradientView = CAGradientLayer()
+
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -23,7 +25,11 @@ class TerrariumView: AYUIView {
         return collection
     }()
     override func setupView() {
-        backgroundColor = .white
+        gradientView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
+        gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientView.colors = [UIColor(hex: 0xE5F3E7).cgColor, UIColor(hex: 0x41A552).cgColor]
+        layer.insertSublayer(gradientView, at: 0)
         bottomView.setColor(.white)
         bottomView.clipsToBounds = true
         bottomView.layer.cornerRadius = 25
@@ -32,6 +38,7 @@ class TerrariumView: AYUIView {
         addButton.addCorners(33).setColor(.white)
         ShadowUIView(radius: 2, subLayer: addButton).setSuperview(self).addConstraints(bottom: safeAreaLayoutGuide.bottomAnchor, bottomConstant: -10
         , centerXAnchor: centerXAnchor, width: 66, height: 66).done()
+        collectionView.setSuperview(self).addTop(anchor: safeAreaLayoutGuide.topAnchor, constant: 10).addRight().addLeft().addBottom(anchor: bottomView.topAnchor, constant: -10).setColor(.clear)
         let image = UIImage(named: "plant-small")
         let imageView = ContentFitImageView().setSuperview(addButton).addConstraints(padding: 5)
         imageView.image = image
