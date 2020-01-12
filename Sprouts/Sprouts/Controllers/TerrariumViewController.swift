@@ -161,7 +161,7 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
             if(plants[indexPath.item].recieveNotification) {
                 collectionCell.imageView.image = UIImage(named: "selected")
             } else {
-                collectionCell.imageView.image = UIImage(named: "selected")
+                collectionCell.imageView.image = UIImage(named: "hollow")
             }
             collectionCell.imageView.isHidden = false
         } else {
@@ -247,7 +247,9 @@ extension TerrariumViewController: WaterButtonDelegate {
             })
         })
         plants[index].nextWaterDate = Date().addingTimeInterval(TimeInterval(exactly: plants[index].wateringInterval)!)
-        CreateNotification.schedule(for: plants[index])
+        if(plants[index].recieveNotification) {
+            CreateNotification.schedule(for: plants[index])
+        }
     }
 }
 
