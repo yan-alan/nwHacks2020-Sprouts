@@ -12,7 +12,6 @@ class NetworkUtil {
     static let baseURLString = "https://trefle.io/api/"
     static let token = "SlhiL0ZYc29jZGpmQmhoY0QzUzNkdz09"
     
-    
     static func makeURL(query: String, request: RequestType) -> URL? {
         
         if (request == RequestType.searchPlants) {
@@ -24,6 +23,8 @@ class NetworkUtil {
             searchURL.append(token)
             
             let returnURL = URL(string: searchURL)
+            
+            print(returnURL)
             return returnURL
         } else if (request == RequestType.getFromID){
             var getURL = ""
@@ -34,6 +35,8 @@ class NetworkUtil {
             getURL.append(token)
             
             let returnURL = URL(string: getURL)
+            
+            print(returnURL)
             return returnURL
         }
         
