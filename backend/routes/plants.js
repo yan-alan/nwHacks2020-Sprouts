@@ -7,14 +7,16 @@ const dbName = "Plants";
 const collectionName = "PlantCollection";
 
 router.get("/", function(req, res, next) {
-    
+    const { username } = req.body;
+
+    database.open(dbName, collectionName)
+        .then(collection => collection.findOne({ username }))
+        .then(document => res.status(200).send({ plants: document.plants }))
+        .catch(err => res.status(404).send({ error: err }));
 });
 
 router.post("/", function(req, res, next) {
-    const { username } = req.body;
-
-    // TODO: extract other properties of plants to save to database
-    const { plant } = req.body;
+    const { plant, username } = req.body;
 
     database.open(dbName, collectionName)
         .then(collection => {
@@ -36,9 +38,7 @@ router.post("/", function(req, res, next) {
                 });
             }
         })
-        .catch(err => {
-            res.status(404).send({ error: err });
-        });
+        .catch(err => res.status(404).send({ error: err }));
 });
 
 router.put("/", function(req, res, next) {
