@@ -12,30 +12,6 @@ class NetworkUtil {
     static let baseURLString = "https://trefle.io/api/"
     static let token = "SlhiL0ZYc29jZGpmQmhoY0QzUzNkdz09"
     
-    static func callAPI(queryPhrase: String, requestType: RequestType) {
-        
-        let url = makeURL(query: queryPhrase, request: requestType)
-        
-        if let apiURL = url {
-            let dataTask = URLSession.shared.dataTask(with: apiURL) {
-                (data, response, error) in
-                if let error = error {
-                    print(error)
-                } else if let inData = data {
-                    let decodeData = try? JSONDecoder().decode(SearchResults.self, from: inData)
-                    
-                    DispatchQueue.main.async {
-                        //completion handler
-                        print(decodeData)
-                        
-                    }
-                }
-            }
-            
-            dataTask.resume()
-        }
-        
-    }
     
     static func makeURL(query: String, request: RequestType) -> URL? {
         
@@ -50,7 +26,15 @@ class NetworkUtil {
             let returnURL = URL(string: searchURL)
             return returnURL
         } else if (request == RequestType.getFromID){
-            //handle this request
+            var getURL = ""
+            getURL.append(baseURLString)
+            getURL.append("species/")
+            getURL.append(query)
+            getURL.append("?token=")
+            getURL.append(token)
+            
+            let returnURL = URL(string: getURL)
+            return returnURL
         }
         
         return nil

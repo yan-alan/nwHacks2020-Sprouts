@@ -12,6 +12,7 @@ import UIKit
 class AddPlantViewController: UIViewController {
     var newView: AddPlantView!
     var tableView: UITableView!
+    var responseArr: SearchResults?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,8 @@ class AddPlantViewController: UIViewController {
         
         if let searchText = newView.searchBar.text {
             print("Search for \(searchText)")
-            NetworkUtil.callAPI(queryPhrase: searchText, requestType: RequestType.searchPlants)
+            self.callAPI(queryPhrase: searchText, requestType: RequestType.searchPlants)
+            print(responseArr)
         }
         
         
@@ -45,6 +47,43 @@ class AddPlantViewController: UIViewController {
     }
     
     @objc func dismissPressed() {
+        if let searchText = newView.searchBar.text {
+            print("Getting plant with ID \(searchText)")
+            self.callAPI(queryPhrase: searchText, requestType: RequestType.getFromID)
+            
+        }
+    }
+    
+    
+    func callAPI(queryPhrase: String, requestType: RequestType) {
+        
+        let url = NetworkUtil.makeURL(query: queryPhrase, request: requestType)
+        
+        if let apiURL = url {
+            let dataTask = URLSession.shared.dataTask(with: apiURL) {
+                (data, response, error) in
+                if let error = error {
+                    print(error)
+                } else if let inData = data {
+                    let decodeData = try? JSONDecoder().decode(SearchResults.self, from: inData)
+                    
+                    DispatchQueue.main.async {
+                        //completion handler
+                        
+                        if requestType == RequestType.searchPlants {
+                            self.responseArr = decodeData
+                        } else if requestType == RequestType.getFromID {
+                            print(decodeData)
+                        }
+                        
+                        
+                        
+                    }
+                }
+            }
+            
+            dataTask.resume()
+        }
         
     }
 
