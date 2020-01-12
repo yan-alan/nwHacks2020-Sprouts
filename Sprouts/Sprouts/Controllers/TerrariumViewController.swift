@@ -22,8 +22,15 @@ class TerrariumViewController: UIViewController {
         collectionView.addGestureRecognizer(longPressGesture)
         collectionView.reloadData()
         print("pls")
+        
+        handleMyBars()
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let newView = TerrariumView()
+        collectionView = newView.collectionView
         for i in 0..<12 {
-            plants.append(Plant("", "", wateringInterval: 60))
+            plants.append(Plant("", "", wateringInterval: 60, recieveNotification: true))
         }
         if(plants.count >= 3) {
             for i in 1...plants.count/3 {
@@ -32,15 +39,6 @@ class TerrariumViewController: UIViewController {
                 imageView.image = UIImage(named: "shelf")
                 collectionView.addSubview(imageView)
             }
-        }
-        handleMyBars()
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let newView = TerrariumView()
-        collectionView = newView.collectionView
-        for i in 0..<12 {
-            plants.append(Plant("", ""))
         }
         newView.notificationButton.addTarget(self, action: #selector(setEdit), for: .touchUpInside)
         newView.addButton.addTarget(self, action: #selector(presentAdd), for: .touchUpInside)
@@ -126,7 +124,16 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
         collectionCell.myWaterButtonDelegate = self
         collectionCell.waterButton.tag = indexPath.item
         print("here")
-        collectionCell.imageView.isHidden = !toEdit
+        if(toEdit) {
+            if(plants[indexPath.item].recieveNotification) {
+                collectionCell.imageView.image = UIImage(named: "selected")
+            } else {
+                collectionCell.imageView.image = UIImage(named: "selected")
+            }
+            collectionCell.imageView.isHidden = false
+        } else {
+            collectionCell.imageView.isHidden = true
+        }
         return collectionCell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -135,8 +142,10 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
                 return
             }
             if(cell.imageView.image == UIImage(named: "hollow")) {
+                plants[indexPath.item].recieveNotification = true
                 cell.imageView.image = UIImage(named: "selected")
             } else {
+                plants[indexPath.item].recieveNotification = false
                 cell.imageView.image = UIImage(named: "hollow")
                 #warning("Must do notification cancelling here")
             }

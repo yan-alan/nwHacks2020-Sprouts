@@ -14,11 +14,13 @@ struct Plant {
     var pictureName: String?
     var wateringInterval: Int
     var nextWaterDate: Date?
+    var recieveNotification: Bool
     
-    init(_ name: String, _ scientificName: String, wateringInterval: Int) {
+    init(_ name: String, _ scientificName: String, wateringInterval: Int, recieveNotification: Bool) {
         self.name = name
         self.scientificName = scientificName
         self.wateringInterval = wateringInterval
+        self.recieveNotification = recieveNotification
     }
 }
 
