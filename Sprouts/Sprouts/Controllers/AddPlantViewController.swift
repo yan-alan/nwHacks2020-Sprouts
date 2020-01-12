@@ -10,14 +10,17 @@ import UIKit
 
 
 class AddPlantViewController: UIViewController {
+    var newView: AddPlantView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        let newView = AddPlantView()
+        newView = AddPlantView()
         
         newView.searchButton.addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
+        newView.dismissButton.addTarget(self, action: #selector(dismissPressed), for: .touchUpInside)
         
         //setup view, add self as action target
         
@@ -27,9 +30,25 @@ class AddPlantViewController: UIViewController {
     
     @objc func searchPressed() {
         
+        if let searchText = newView.searchBar.text {
+            print("Search for \(searchText)")
+            NetworkUtil.callAPI(queryPhrase: searchText, requestType: RequestType.searchPlants)
+        }
+        
+        
+        
     }
     
+    @objc func dismissPressed() {
+        
+    }
+
+    
 }
+
+
+
+
 //
 //extension AddPlantViewController: UITableViewDelegate, UITableViewDataSource {
 //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
