@@ -10,10 +10,15 @@ import UIKit
 
 class DetailedPlantViewController: UIViewController {
     var model: DetailPlantData!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let newView = DetailedPlantView()
         newView.model = model
         self.view = newView
     }
+    
+    
+    
+    
 }

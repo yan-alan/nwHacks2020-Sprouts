@@ -23,7 +23,7 @@ class TerrariumViewController: UIViewController {
         newView.collectionView.register(TerrariumCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         #warning("Must change this to stored data!")
         for _ in 0..<12 {
-            //plants.append(Plant())
+         //   plants.append()
         }
         print("here")
         
@@ -69,7 +69,7 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
         return CGSize(width: 100, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return plants.count
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,8 +83,11 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let presentVC = DetailedPlantViewController()
-        presentVC.model = plants[indexPath.item]
-        navigationController?.pushViewController(presentVC, animated: true)
+        
+        //presentVC.model = plants[indexPath.item]
+        present(presentVC, animated: true, completion: nil)
+        
+        //navigationController?.pushViewController(presentVC, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return true
