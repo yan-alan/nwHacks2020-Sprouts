@@ -22,7 +22,7 @@ class TerrariumView: AYUIView {
     }()
     override func setupView() {
         collectionView.setSuperview(self).addConstraints(padding: 0).setColor(.red)
-        addButton.setSuperview(self).addBottom(constant: -10).addWidth(withConstant: 100).addHeight(withConstant: 200).addCorners(25).setColor(.blue)
+        addButton.setSuperview(self).addBottom(anchor: safeAreaLayoutGuide.bottomAnchor,constant: -10).addWidth(withConstant: 100).addHeight(withConstant: 100).addCorners(50).setColor(.blue)
         addButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }

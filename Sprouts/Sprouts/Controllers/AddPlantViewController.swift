@@ -9,7 +9,7 @@
 import UIKit
 
 
-class AddPlantViewController: UIViewController {
+class AddPlantViewController: UIViewController, UITextFieldDelegate {
     var newView: AddPlantView!
     var tableView: UITableView!
     var responseArr: SearchResults?
@@ -28,12 +28,21 @@ class AddPlantViewController: UIViewController {
         tableView.register(PlantTableViewCell.self, forCellReuseIdentifier: "cell")
         newView.searchButton.addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
         newView.dismissButton.addTarget(self, action: #selector(dismissPressed), for: .touchUpInside)
-        
+        newView.searchBar.delegate = self
         //setup view, add self as action target
         
         self.view = newView
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tappedOutside))
+            tap.cancelsTouchesInView = false
+            view.addGestureRecognizer(tap)
     }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+    @objc func tappedOutside() {
+        self.view.endEditing(true)
+    }
     
     @objc func searchPressed() {
         
