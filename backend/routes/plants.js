@@ -42,7 +42,37 @@ router.post("/", function(req, res, next) {
 });
 
 router.put("/", function(req, res, next) {
+    const { username, plant } = req.body;
 
+    let plantCollection, newPlants;
+    database.open(dbName, collectionName)
+        .then(async collection => {
+            plantCollection = collection;
+            return collection.findOne({ username });
+        })
+        .then(user => {
+            newPlants = user.plants.map(element => {
+                return element._id === plant._id ? plant : element
+            });
+            return plantCollection.updateOne(
+                { username: username },
+                { $set: { plants: newPlants } }
+            );
+        })
+        .then(writeResult => {
+            const matchedCount = writeResult.matchedCount;
+            if (matchedCount > 0) {
+                return res.status(200).send({
+                    message: "Plant was successfully updated.",
+                    plants: newPlants
+                });
+            } else {
+                return res.status(422).send({
+                    error: "Could not update plant. Please try again." 
+                });
+            }
+        })
+        .catch(err => res.status(404).send({ error: err }));
 });
 
 router.delete("/", function(req, res, next) {
