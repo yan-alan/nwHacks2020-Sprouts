@@ -16,4 +16,8 @@ class DetailedPlantViewController: UIViewController {
         newView.model = model
         self.view = newView
     }
+    
+    
+    
+    
 }

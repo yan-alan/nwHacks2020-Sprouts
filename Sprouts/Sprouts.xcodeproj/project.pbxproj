@@ -108,8 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				2588871723CA986900E8D181 /* AddPlantView.swift */,
-				2588871B23CAA70900E8D181 /* PlantTableViewCell.swift */,
 				25AF517823CA94B30082C16D /* DetailedPlantView.swift */,
+				2588871B23CAA70900E8D181 /* PlantTableViewCell.swift */,
 				25AF516F23CA8D450082C16D /* TerrariumView.swift */,
 			);
 			path = Views;
