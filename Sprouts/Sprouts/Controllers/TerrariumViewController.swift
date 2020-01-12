@@ -31,6 +31,7 @@ class TerrariumViewController: UIViewController {
         for i in 0..<12 {
             plants.append(Plant("", ""))
         }
+        newView.notificationButton.addTarget(self, action: #selector(setEdit), for: .touchUpInside)
         newView.addButton.addTarget(self, action: #selector(presentAdd), for: .touchUpInside)
         //Collection View Delegation
         newView.collectionView.delegate = self
@@ -43,6 +44,9 @@ class TerrariumViewController: UIViewController {
         print("here")
         
         self.view = newView
+    }
+    @objc func setEdit() {
+        toEdit = !toEdit
     }
     func handleMyBars() {
         if(plants.count >= 3) {
@@ -96,22 +100,26 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
         guard let collectionCell = cell as? TerrariumCollectionViewCell else {
             return cell
         }
-        if(toEdit) {
-            
-        } else {
-            
-        }
-        print("here")
+        collectionCell.imageView.isHidden = !toEdit
         return collectionCell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let presentVC = DetailedPlantViewController()
-        
-        //presentVC.model = plants[indexPath.item]
-        present(presentVC, animated: true, completion: nil)
-        
-        //navigationController?.pushViewController(presentVC, animated: true)
+        if(toEdit) {
+            guard let cell = collectionView.cellForItem(at: indexPath) as? TerrariumCollectionViewCell else {
+                return
+            }
+            if(cell.imageView.image == UIImage(named: "hollow")) {
+                cell.imageView.image = UIImage(named: "selected")
+            } else {
+                cell.imageView.image = UIImage(named: "hollow")
+                #warning("Must do notification cancelling here")
+            }
+        } else {
+            let presentVC = DetailedPlantViewController()
+            
+            //presentVC.model = plants[indexPath.item]
+            present(presentVC, animated: true, completion: nil)
+        }
     }
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return true

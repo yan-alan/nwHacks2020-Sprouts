@@ -62,7 +62,6 @@ class TerrariumCollectionViewCell: UICollectionViewCell {
     lazy var plantImage = ContentFitImageView()
     lazy var waterButton = UIButton()
     lazy var imageView = UIImageView()
-    
     var model: Plant? {
         didSet{
             
@@ -89,7 +88,8 @@ class TerrariumCollectionViewCell: UICollectionViewCell {
         image.image = UIImage(named: "waterdrop")
         
         plantImage.image = UIImage(named: "plant-default")
-        imageView.setSuperview(self).addBottom(constant: -20).addWidth(withConstant: 50).addHeight(withConstant: 50).done()
+        imageView.setSuperview(self).addBottom(constant: -20).addWidth(withConstant: 30).addHeight(withConstant: 30).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        imageView.image = UIImage(named: "selected")
     }
 }
 
