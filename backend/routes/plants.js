@@ -42,7 +42,7 @@ router.post("/", function(req, res, next) {
 });
 
 router.put("/", function(req, res, next) {
-    
+
 });
 
 router.delete("/", function(req, res, next) {
@@ -50,7 +50,14 @@ router.delete("/", function(req, res, next) {
 });
 
 router.get("/:id", function(req, res, next) {
-    
+    const plantId = Number(req.params.id);
+    const { username } = req.body;
+
+    database.open(dbName, collectionName)
+        .then(collection => collection.findOne({ username }))
+        .then(document => document.plants.find(element => element._id ? element._id === plantId : false))
+        .then(plant => res.status(200).send({ plant }))
+        .catch(err => res.status(404).send({ error: err }));
 });
 
 export { router };
