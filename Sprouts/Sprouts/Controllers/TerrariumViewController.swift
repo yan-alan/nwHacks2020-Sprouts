@@ -421,6 +421,7 @@ extension TerrariumViewController: GrabPlantsDelegate {
                     if let serverData = decodeData {
                         self.plants = serverData.plants
                         self.collectionView.reloadData()
+                        self.handleMyBars()
                         print(self.plants)
                     }
                 }
