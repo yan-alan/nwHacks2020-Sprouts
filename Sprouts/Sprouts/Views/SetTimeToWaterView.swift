@@ -25,7 +25,7 @@ class SetTimeToWaterView: AYUIView {
     lazy var searchBar: UITextField = {
         let textField = UITextField()
 
-        textField.placeholder = "enter watering interval in seconds"
+        textField.placeholder = "how often does this plant need water? (s)"
         textField.text = ""
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
@@ -48,10 +48,10 @@ class SetTimeToWaterView: AYUIView {
         searchView.layer.borderColor = UIColor.black.cgColor
         
         let plantLabel = UILabel()
-        plantLabel.setSuperview(self).addLeft(anchor: searchView.leftAnchor,constant: 20).addWidth(withConstant: 50).centerYAnchor.constraint(equalTo: searchView.topAnchor).isActive = true
+        plantLabel.setSuperview(self).addLeft(anchor: searchView.leftAnchor,constant: 20).addWidth(withConstant: 170).centerYAnchor.constraint(equalTo: searchView.topAnchor).isActive = true
         plantLabel.textAlignment = .center
         plantLabel.backgroundColor = .white
-        plantLabel.text = "Timer"
+        plantLabel.text = "Watering Frequency"
         searchBar.setSuperview(self).addTop(anchor: searchView.topAnchor).addLeft(anchor: searchView.leftAnchor, constant: 20).addBottom(anchor: searchView.bottomAnchor).addRight(anchor: searchView.rightAnchor, constant: -20).done()
         
         addButton.setSuperview(self).addTop(anchor: searchView.bottomAnchor, constant: 10).addHeight(withConstant: 0).addWidth(withConstant: 100).addCorners(10).setColor(.clear)

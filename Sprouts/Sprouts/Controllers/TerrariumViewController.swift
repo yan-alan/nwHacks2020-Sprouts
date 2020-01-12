@@ -61,9 +61,9 @@ class TerrariumViewController: UIViewController {
         newView.collectionView.register(TerrariumCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         print("here")
 
-        if(UserDefaults.standard.integer(forKey: "firstTime") == 0) {
+//        if(UserDefaults.standard.integer(forKey: "firstTime") == 0) {
             openLogin()
-        }
+//        }
 
 
         self.view = newView

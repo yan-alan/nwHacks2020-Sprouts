@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import AlanYanHelpers
 class LoginView: UIView {
     
     lazy var gradientView = CAGradientLayer()
@@ -18,7 +18,7 @@ class LoginView: UIView {
         image.layer.masksToBounds = true
         image.layer.borderWidth = 0
         
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleAspectFit
         image.clipsToBounds = true
         
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -32,11 +32,9 @@ class LoginView: UIView {
         let textField = UITextField()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Email"
+        textField.placeholder = "Username"
         textField.text = ""
         textField.autocapitalizationType = .none
-        
-        textField.borderStyle = UITextField.BorderStyle.bezel
         textField.textAlignment = .center
         textField.backgroundColor = .white
         
@@ -51,8 +49,6 @@ class LoginView: UIView {
         textField.text = ""
         textField.autocapitalizationType = .none
         textField.isSecureTextEntry = true
-        
-        textField.borderStyle = UITextField.BorderStyle.bezel
         textField.textAlignment = .center
         textField.backgroundColor = .white
         
@@ -64,8 +60,8 @@ class LoginView: UIView {
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Login", for: .normal)
-        button.backgroundColor = UIColor(hex: 0x302F82)
-        button.setTitleColor(UIColor.black, for: .normal)
+//        button.backgroundColor = UIColor(hex: 0x302F82)
+        button.setTitleColor(UIColor.white, for: .normal)
         
         return button
     }()
@@ -96,7 +92,6 @@ class LoginView: UIView {
     
     func setupView() {
         
-        self.addSubview(plantIcon)
         self.addSubview(emailBar)
         self.addSubview(passwordBar)
         self.addSubview(loginButton)
@@ -106,31 +101,48 @@ class LoginView: UIView {
     
     func setupConstraints() {
         //MARK: plantIcon Constraints
-        plantIcon.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -150).isActive = true
+        let backImage = ContentFitImageView()
+        backImage.image = UIImage(named: "flower-back")
+        backImage.setSuperview(self).addTop(constant: 20).addRight().addLeft().addHeight(withConstant: 300).done()
+        plantIcon.setSuperview(self).done()
+        plantIcon.topAnchor.constraint(equalTo: topAnchor, constant: 120).isActive = true
         plantIcon.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
         plantIcon.heightAnchor.constraint(equalToConstant: 150).isActive = true
         plantIcon.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
+        let frontImage = ContentFitImageView()
+        frontImage.image = UIImage(named: "flower-front")
+        frontImage.setSuperview(self).addTop(constant: 50).addRight(constant: -50).addLeft(constant: 50).addHeight(withConstant: 270).done()
+
         //MARK: emailBar Constraints
-        emailBar.topAnchor.constraint(equalTo: plantIcon.bottomAnchor, constant: 100).isActive = true
-        emailBar.leftAnchor.constraint(equalTo: leftAnchor, constant: 50).isActive = true
-        emailBar.rightAnchor.constraint(equalTo: rightAnchor, constant: -50).isActive = true
-        emailBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        emailBar.addCorners(15).done()
+        emailBar.addCorners(7).done()
+
+        ShadowUIView(radius: 3, subLayer: emailBar).setSuperview(self).addTop(anchor: plantIcon.bottomAnchor, constant: 80).addLeft(constant: 50).addRight(constant: -50).addHeight(withConstant: 50).done()
+
         
         //MARK: passwordBar Constraints
-        passwordBar.topAnchor.constraint(equalTo: emailBar.bottomAnchor, constant: 50).isActive = true
-        passwordBar.leftAnchor.constraint(equalTo: leftAnchor, constant: 50).isActive = true
-        passwordBar.rightAnchor.constraint(equalTo: rightAnchor, constant: -50).isActive = true
-        passwordBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        passwordBar.addCorners(15).done()
+        passwordBar.addCorners(7).done()
+
+        ShadowUIView(radius: 3, subLayer: passwordBar).setSuperview(self).addTop(anchor: emailBar.bottomAnchor, constant: 30).addLeft(constant: 50).addRight(constant: -50).addHeight(withConstant: 50).done()
         
         //MARK: loginButton Constraints
-        loginButton.topAnchor.constraint(equalTo: passwordBar.bottomAnchor, constant: 50).isActive = true
-        loginButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 75).isActive = true
-        loginButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -75).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        loginButton.addCorners(15).done()
+//        loginButton.topAnchor.constraint(equalTo: passwordBar.bottomAnchor, constant: 30).isActive = true
+//        loginButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+//        loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//        loginButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        loginButton.addCorners(15).done()
+        
+        loginButton.addCorners(10).done()
+
+        ShadowUIView(radius: 2, subLayer: loginButton).setSuperview(self).addTop(anchor: passwordBar.bottomAnchor, constant: 30).addWidth(withConstant: 150).addHeight(withConstant: 50).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+//        let view = UIView()
+        let gradientView = CAGradientLayer()
+        gradientView.frame = CGRect(x: 0, y: 0, width: 150, height: 50)
+        gradientView.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientView.endPoint = CGPoint(x: 1.0, y: 0.5)
+        gradientView.colors = [UIColor(hex: 0x302F82).cgColor, UIColor(hex: 0x5D5DB8).cgColor]
+        loginButton.layer.addSublayer(gradientView)
         
     }
     
