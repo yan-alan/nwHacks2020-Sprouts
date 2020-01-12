@@ -18,7 +18,7 @@ class TerrariumViewController: UIViewController {
         collectionView.reloadData()
         print("pls")
         for i in 0..<12 {
-            plants.append(Plant("", ""))
+            plants.append(Plant("", "", wateringInterval: 60))
         }
         if(plants.count >= 3) {
             for i in 1...plants.count/3 {
@@ -45,7 +45,18 @@ class TerrariumViewController: UIViewController {
         }
         print("here")
         
+        newView.settingsButton.addTarget(self, action: #selector(testLogin), for: .touchUpInside)
+        
         self.view = newView
+    }
+    
+    @objc func testLogin() {
+        let modalVC = LoginViewController()
+        
+        modalVC.modalPresentationStyle = .fullScreen
+        
+        self.present(modalVC, animated: true, completion: {})
+        
     }
 
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
@@ -90,6 +101,8 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
         guard let collectionCell = cell as? TerrariumCollectionViewCell else {
             return cell
         }
+        collectionCell.myWaterButtonDelegate = self
+        collectionCell.waterButton.tag = indexPath.item
         print("here")
         return collectionCell
     }
@@ -119,9 +132,18 @@ extension TerrariumViewController: AddPlantDelegate {
     
 }
 
-
 protocol AddPlantDelegate {
     func appendToArray(data: Plant)
+}
+
+extension TerrariumViewController: WaterButtonDelegate {
+    func pressedButtonAt(_ index: Int) {
+        print(index)
+    }
+}
+
+protocol WaterButtonDelegate {
+    func pressedButtonAt(_ index: Int)
 }
 
 

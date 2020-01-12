@@ -11,9 +11,14 @@ import Foundation
 struct Plant {
     var name: String
     var scientificName: String
-    init(_ name: String, _ scientificName: String) {
+    var pictureName: String?
+    var wateringInterval: Int
+    var nextWaterDate: Date?
+    
+    init(_ name: String, _ scientificName: String, wateringInterval: Int) {
         self.name = name
         self.scientificName = scientificName
+        self.wateringInterval = wateringInterval
     }
 }
 

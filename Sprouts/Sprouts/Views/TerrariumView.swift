@@ -60,7 +60,26 @@ class TerrariumView: AYUIView {
 
 class TerrariumCollectionViewCell: UICollectionViewCell {
     lazy var plantImage = ContentFitImageView()
-    lazy var waterButton = UIButton()
+    var myWaterButtonDelegate: WaterButtonDelegate?
+    lazy var waterButton: UIButton = {
+        let button = UIButton()
+        
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        
+        button.backgroundColor = .red
+        
+        return button
+    }()
+    
+    @objc func buttonPressed() {
+        tellDelegateMyTag(self.waterButton.tag)
+    }
+    
+    func tellDelegateMyTag(_ index: Int) {
+        myWaterButtonDelegate?.pressedButtonAt(index)
+    }
+    
+    
     var model: Plant? {
         didSet{
             

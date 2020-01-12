@@ -138,7 +138,7 @@ class DetailedPlantView: AYUIView {
         
         image.translatesAutoresizingMaskIntoConstraints = false
         
-        image.image = UIImage(named: "waterdrop")
+        image.image = UIImage(named: "sun")
         
         return image
     }()
@@ -225,7 +225,7 @@ class DetailedPlantView: AYUIView {
         waterView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         waterView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: -75).isActive = true
         waterView.topAnchor.constraint(equalTo: scienceLabel.bottomAnchor, constant: 50).isActive = true
-        waterView.addCorners(100)
+        waterView.addCorners(100).done()
         
         //MARK: waterIcon Constraints
         waterIcon.centerXAnchor.constraint(equalTo: waterView.centerXAnchor, constant: 0).isActive = true
@@ -247,7 +247,7 @@ class DetailedPlantView: AYUIView {
         sunView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         sunView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 75).isActive = true
         sunView.topAnchor.constraint(equalTo: scienceLabel.bottomAnchor, constant: 50).isActive = true
-        sunView.addCorners(100)
+        sunView.addCorners(100).done()
         
         //MARK: sunIcon Constraints
         sunIcon.centerXAnchor.constraint(equalTo: sunView.centerXAnchor, constant: 0).isActive = true
