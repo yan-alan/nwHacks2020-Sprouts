@@ -94,6 +94,7 @@ class AddPlantView: UIView {
     }
     
     func setupView(){
+        backgroundColor = .systemBackground
         self.addSubview(titleLabel)
         self.addSubview(plantIcon)
         self.addSubview(searchBar)

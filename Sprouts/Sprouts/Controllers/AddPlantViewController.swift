@@ -21,7 +21,8 @@ class AddPlantViewController: UIViewController {
         
         newView = AddPlantView()
         tableView = newView.tableView
-        
+//        self.isModalInPresentation = true
+        tableView.separatorStyle = .singleLine
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(PlantTableViewCell.self, forCellReuseIdentifier: "cell")
@@ -92,7 +93,7 @@ class AddPlantViewController: UIViewController {
 
 extension AddPlantViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 62
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
@@ -104,8 +105,6 @@ extension AddPlantViewController: UITableViewDelegate, UITableViewDataSource {
             print("returning cell")
             return cell
         }
-        print(customCell)
-//        customCell.backgroundColor = .red
         customCell.scientificName.text = "Jogn"
         customCell.commonName.text = "James"
         return customCell
