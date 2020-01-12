@@ -14,7 +14,6 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     var tableView: UITableView!
     var responseArr: SearchResults = []
     var terrariumDelegate: AddPlantDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
@@ -51,7 +50,7 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
         
         if let searchText = newView.searchBar.text {
             print("Search for \(searchText)")
-            self.callAPI(queryPhrase: searchText, requestType: RequestType.searchPlants)
+            callAPI(queryPhrase: searchText, requestType: RequestType.searchPlants)
         }
         
         
@@ -65,7 +64,7 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     @objc func testPressed() {
         if let searchText = newView.searchBar.text {
             print("Getting plant with ID \(searchText)")
-            self.callAPI(queryPhrase: searchText, requestType: RequestType.getFromID)
+            callAPI(queryPhrase: searchText, requestType: RequestType.getFromID)
             
         }
     }
@@ -73,19 +72,21 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     func callAPI(queryPhrase: String, requestType: RequestType) {
         
         let url = NetworkUtil.makeURL(query: queryPhrase, request: requestType)
-        print(url)
         if let apiURL = url {
+            print(apiURL)
             let dataTask = URLSession.shared.dataTask(with: apiURL) {
                 (data, response, error) in
                 if let error = error {
                     print(error)
                 } else if let inData = data {
+                    print(inData)
                     var searchData: SearchResults?
-                    var plantData: DetailPlantData?
+                    var plantData: Plant?
                     if (requestType == RequestType.searchPlants) {
                         searchData = try? JSONDecoder().decode(SearchResults.self, from: inData)
                     } else if (requestType == RequestType.getFromID) {
-                        plantData = try? JSONDecoder().decode(DetailPlantData.self, from: inData)
+//                        plantData = try? JSONDecoder().decode(Plant.self, from: inData)
+                        print(plantData)
                     }
                     
                     
@@ -96,22 +97,20 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
                             guard let data = searchData else {
                                 return
                             }
-                            print(data.count)
-
                             self.responseArr = data
-                            print(self.responseArr.count)
                             self.tableView.reloadData()
                             
                         case .getFromID:
                             if let data = plantData {
                                 print(data)
+                                self.terrariumDelegate?.appendToArray(data: data)
+                                self.dismiss(animated: true, completion: nil)
                             }
                         }
                         
                     }
                 }
             }
-            
             dataTask.resume()
         }
         
@@ -134,13 +133,19 @@ extension AddPlantViewController: UITableViewDelegate, UITableViewDataSource {
             print("returning cell")
             return cell
         }
-        
+        if(responseArr[indexPath.row].commonName == nil) {
+            responseArr[indexPath.row].commonName = "No Name"
+        }
         customCell.scientificName.text = responseArr[indexPath.row].scientificName
         customCell.commonName.text = responseArr[indexPath.row].commonName
+        customCell.id = responseArr[indexPath.row].id
         return customCell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        terrariumDelegate?.appendToArray(data: Plant(responseArr[indexPath.row].commonName!, responseArr[indexPath.row].commonName!))
+        dismiss(animated: true, completion: nil)
     }
     
     
 }
-    
     

@@ -10,7 +10,6 @@ import UIKit
 import AlanYanHelpers
 
 class TerrariumView: AYUIView {
-    lazy var topView = UIView()
     lazy var bottomView = UIView()
     lazy var addButton = UIButton()
     lazy var collectionView: UICollectionView = {
@@ -25,20 +24,17 @@ class TerrariumView: AYUIView {
     }()
     override func setupView() {
         backgroundColor = .white
-        topView.setColor(.white)
-        topView.clipsToBounds = true
-        topView.layer.cornerRadius = 25
-        topView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        
         bottomView.setColor(.white)
         bottomView.clipsToBounds = true
         bottomView.layer.cornerRadius = 25
         bottomView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        ShadowUIView(subLayer: bottomView).setSuperview(self).addBottom().addRight().addLeft().addHeight(withConstant: 100).done()
-        ShadowUIView(subLayer: topView).setSuperview(self).addTop().addRight().addLeft().addHeight(withConstant: 100).done()
-        collectionView.setSuperview(self).addTop(anchor: topView.bottomAnchor, constant: 10).addRight().addLeft().addBottom(anchor: bottomView.topAnchor, constant: -10).setColor(.white)
-        addButton.setSuperview(self).addBottom(anchor: safeAreaLayoutGuide.bottomAnchor,constant: -10).addWidth(withConstant: 50).addHeight(withConstant: 50).addCorners(25).setColor(.blue)
-        addButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        ShadowUIView(radius: 2, subLayer: bottomView).setSuperview(self).addBottom().addRight().addLeft().addHeight(withConstant: 120).done()
+        addButton.addCorners(33).setColor(.white)
+        ShadowUIView(radius: 2, subLayer: addButton).setSuperview(self).addConstraints(bottom: safeAreaLayoutGuide.bottomAnchor, bottomConstant: -10
+        , centerXAnchor: centerXAnchor, width: 66, height: 66).done()
+        let image = UIImage(named: "plant-small")
+        let imageView = ContentFitImageView().setSuperview(addButton).addConstraints(padding: 5)
+        imageView.image = image
     }
     override func layoutSubviews() {
         super.layoutSubviews()

@@ -10,7 +10,7 @@ import UIKit
 
 class TerrariumViewController: UIViewController {
     var collectionView: UICollectionView!
-    var plants: [DetailPlantData] = []
+    var plants: [Plant] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         let newView = TerrariumView()
@@ -99,16 +99,16 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
 }
 
 extension TerrariumViewController: AddPlantDelegate {
-    func appendToArray(data: DetailPlantData) {
+    func appendToArray(data: Plant) {
         self.plants.append(data)
-        print("appending data")
+        collectionView.reloadData()
     }
     
 }
 
 
 protocol AddPlantDelegate {
-    func appendToArray(data: DetailPlantData)
+    func appendToArray(data: Plant)
 }
 
 
