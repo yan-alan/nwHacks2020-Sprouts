@@ -15,6 +15,7 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     var responseArr: SearchResults = []
     var terrariumDelegate: AddPlantDelegate?
     var waterImageView: UIImageView!
+    var resultsLabel: UILabel!
     private var waterCount = 1
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,7 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         newView = AddPlantView()
+        resultsLabel = newView.noResults
         tableView = newView.tableView
         waterImageView = newView.wateringImage
 //        self.isModalInPresentation = true
@@ -35,7 +37,8 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
         
         newView.searchBar.delegate = self
         //setup view, add self as action target
-        reloadTableView()
+        tableView.isHidden = true
+        waterImageView.isHidden = true
         self.view = newView
         let tap = UITapGestureRecognizer(target: self, action: #selector(tappedOutside))
             tap.cancelsTouchesInView = false
@@ -46,7 +49,11 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     func reloadTableView() {
         if(responseArr.count == 0) {
             tableView.isHidden = true
+            waterImageView.isHidden = true
+            resultsLabel.isHidden = false
+            
         } else {
+            resultsLabel.isHidden = true
             waterImageView.isHidden = true
             tableView.isHidden = false
             tableView.reloadData()

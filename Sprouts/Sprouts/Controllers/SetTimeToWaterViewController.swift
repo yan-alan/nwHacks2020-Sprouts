@@ -38,16 +38,19 @@ class SetTimeToWaterViewController: UIViewController, UITextFieldDelegate {
                 }
                 return false
             }
+            if(textField.text == "") {
+                addButton.userDefinedConstraintDict["height"]?.constant = 50
+                UIView.animate(withDuration: 0.4) {
+                    self.view.layoutIfNeeded()
+                }
+            } 
         }
-        if(textField.text == "" || textField.text == nil) {
-            addButton.userDefinedConstraintDict["height"]?.constant = 0
-            UIView.animate(withDuration: 0.4) {
-                self.view.layoutIfNeeded()
-            }
-        } else {
-            addButton.userDefinedConstraintDict["height"]?.constant = 50
-            UIView.animate(withDuration: 0.4) {
-                self.view.layoutIfNeeded()
+        else {
+            if(textField.text?.count == 1) {
+                addButton.userDefinedConstraintDict["height"]?.constant = 0
+                UIView.animate(withDuration: 0.4) {
+                    self.view.layoutIfNeeded()
+                }
             }
         }
         return true
