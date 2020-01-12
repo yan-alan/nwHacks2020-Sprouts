@@ -8,6 +8,8 @@
 
 import UIKit
 import AlanYanHelpers
+import SpriteKit
+
 class TerrariumViewController: UIViewController {
     var collectionView: UICollectionView!
     var plants: [Plant] = []
@@ -16,6 +18,9 @@ class TerrariumViewController: UIViewController {
             collectionView.reloadData()
         }
     }
+    
+    var skView: SKView?
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
@@ -57,7 +62,14 @@ class TerrariumViewController: UIViewController {
         
         newView.settingsButton.addTarget(self, action: #selector(testLogin), for: .touchUpInside)
         
+        
+        
+        
         self.view = newView
+//        
+//        skView = SKView(frame: newView.frame)
+//        skView!.presentScene(SKScene())
+//        self.view.addSubview(skView!)
     }
     @objc func onReceiveData(_ notification:Notification) {
         collectionView.reloadData()
@@ -132,6 +144,19 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
         guard let collectionCell = cell as? TerrariumCollectionViewCell else {
             return cell
         }
+//        
+//        var emitter = newWaterEmitter()
+//        emitter?.position = CGPoint(x: collectionCell.frame.midX, y: collectionCell.frame.midY)
+//        
+//        skView?.scene?.addChild(emitter!)
+//        
+//        print(skView?.scene?.children)
+//        
+//        if let emmiter = SKEmitterNode(fileNamed: "WaterParticles") {
+//            skView?.scene?.addChild(emmiter)
+//            skView?.presentScene(skView?.scene)
+//        }
+        
         collectionCell.plantImage.image = UIImage(named: plants[indexPath.item].pictureName)
         collectionCell.myWaterButtonDelegate = self
         collectionCell.waterButton.tag = indexPath.item
@@ -261,6 +286,11 @@ protocol WaterButtonDelegate {
     func pressedButtonAt(_ index: Int)
 }
 
+extension TerrariumViewController {
+    func newWaterEmitter() -> SKEmitterNode? {
+        return SKEmitterNode(fileNamed: "WaterParticles")
+    }
+}
 
 import SwiftUI
 

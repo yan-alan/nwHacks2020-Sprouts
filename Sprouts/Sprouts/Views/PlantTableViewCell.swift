@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import SpriteKit
 import AlanYanHelpers
 
 class PlantTableViewCell: UITableViewCell {
     lazy var commonName = UILabel()
     lazy var scientificName = UILabel()
+    var sknode: SKNode?
     
     var id: Int?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
