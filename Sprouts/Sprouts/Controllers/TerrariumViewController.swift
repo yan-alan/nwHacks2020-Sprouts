@@ -60,10 +60,10 @@ class TerrariumViewController: UIViewController {
         newView.collectionView.dataSource = self
         newView.collectionView.register(TerrariumCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         print("here")
-        
-        newView.settingsButton.addTarget(self, action: #selector(testLogin), for: .touchUpInside)
-        
-        
+                
+        if(UserDefaults.standard.integer(forKey: "firstTime") == 0) {
+            openLogin()
+        }
         
         
         self.view = newView
@@ -76,9 +76,8 @@ class TerrariumViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    @objc func testLogin() {
+    func openLogin() {
         let modalVC = LoginViewController()
-        
         modalVC.modalPresentationStyle = .fullScreen
         
         self.present(modalVC, animated: true, completion: {})
