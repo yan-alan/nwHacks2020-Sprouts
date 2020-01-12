@@ -26,6 +26,8 @@
 		25AF517723CA94730082C16D /* DetailedPlantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF517623CA94730082C16D /* DetailedPlantViewController.swift */; };
 		25AF517923CA94B30082C16D /* DetailedPlantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF517823CA94B30082C16D /* DetailedPlantView.swift */; };
 		25CC150123CB8BDA00DFED37 /* CreateNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CC150023CB8BDA00DFED37 /* CreateNotification.swift */; };
+		25CC150323CBAE6100DFED37 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CC150223CBAE6100DFED37 /* SettingsViewController.swift */; };
+		25CC150523CBAE9C00DFED37 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CC150423CBAE9C00DFED37 /* SettingsView.swift */; };
 		6C4EF3DB23CAA043004999A2 /* NetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EF3DA23CAA043004999A2 /* NetworkUtil.swift */; };
 		6C4EF3DD23CAA559004999A2 /* PlantSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EF3DC23CAA559004999A2 /* PlantSearch.swift */; };
 		6C4EF3DF23CAF892004999A2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EF3DE23CAF892004999A2 /* LoginViewController.swift */; };
@@ -56,6 +58,8 @@
 		25AF517623CA94730082C16D /* DetailedPlantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPlantViewController.swift; sourceTree = "<group>"; };
 		25AF517823CA94B30082C16D /* DetailedPlantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPlantView.swift; sourceTree = "<group>"; };
 		25CC150023CB8BDA00DFED37 /* CreateNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNotification.swift; sourceTree = "<group>"; };
+		25CC150223CBAE6100DFED37 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		25CC150423CBAE9C00DFED37 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6C4EF3DA23CAA043004999A2 /* NetworkUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtil.swift; sourceTree = "<group>"; };
 		6C4EF3DC23CAA559004999A2 /* PlantSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantSearch.swift; sourceTree = "<group>"; };
 		6C4EF3DE23CAF892004999A2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 				2588871B23CAA70900E8D181 /* PlantTableViewCell.swift */,
 				25AF516F23CA8D450082C16D /* TerrariumView.swift */,
 				6C4EF3E023CAF8A4004999A2 /* LoginView.swift */,
+				25CC150423CBAE9C00DFED37 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 				2588871523CA985B00E8D181 /* AddPlantViewController.swift */,
 				6C4EF3DE23CAF892004999A2 /* LoginViewController.swift */,
 				251AF64F23CB7E2200057CF3 /* SetTimeToWaterViewController.swift */,
+				25CC150223CBAE6100DFED37 /* SettingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -255,6 +261,7 @@
 			files = (
 				2588871623CA985B00E8D181 /* AddPlantViewController.swift in Sources */,
 				25AF517023CA8D450082C16D /* TerrariumView.swift in Sources */,
+				25CC150323CBAE6100DFED37 /* SettingsViewController.swift in Sources */,
 				25AF514C23CA8BA40082C16D /* AppDelegate.swift in Sources */,
 				6C4EF3DF23CAF892004999A2 /* LoginViewController.swift in Sources */,
 				25AF517723CA94730082C16D /* DetailedPlantViewController.swift in Sources */,
@@ -273,6 +280,7 @@
 				251AF65023CB7E2200057CF3 /* SetTimeToWaterViewController.swift in Sources */,
 				6C4EF3E123CAF8A4004999A2 /* LoginView.swift in Sources */,
 				25AF514E23CA8BA40082C16D /* SceneDelegate.swift in Sources */,
+				25CC150523CBAE9C00DFED37 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
