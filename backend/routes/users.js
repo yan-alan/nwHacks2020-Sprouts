@@ -3,8 +3,8 @@ import express from "express";
 
 const router = express.Router();
 
-const dbName = "Plants";
-const collectionName = "PlantCollection";
+const dbName = "Users";
+const collectionName = "Users";
 
 router.get("/", function(req, res, next) {
   const { username, password } = req.body;
