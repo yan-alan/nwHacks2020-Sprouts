@@ -8,6 +8,8 @@
 
 import UIKit
 import AlanYanHelpers
+import SpriteKit
+
 class TerrariumViewController: UIViewController {
     var collectionView: UICollectionView!
     var plants: [Plant] = []
@@ -16,6 +18,9 @@ class TerrariumViewController: UIViewController {
             collectionView.reloadData()
         }
     }
+    
+    var skView: SKView?
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
@@ -53,15 +58,18 @@ class TerrariumViewController: UIViewController {
         newView.collectionView.delegate = self
         newView.collectionView.dataSource = self
         newView.collectionView.register(TerrariumCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        #warning("Must change this to stored data!")
-        for _ in 0..<12 {
-         //   plants.append()
-        }
         print("here")
         
         newView.settingsButton.addTarget(self, action: #selector(testLogin), for: .touchUpInside)
         
+        
+        
+        
         self.view = newView
+//        
+//        skView = SKView(frame: newView.frame)
+//        skView!.presentScene(SKScene())
+//        self.view.addSubview(skView!)
     }
     @objc func onReceiveData(_ notification:Notification) {
         collectionView.reloadData()
@@ -136,6 +144,19 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
         guard let collectionCell = cell as? TerrariumCollectionViewCell else {
             return cell
         }
+//        
+//        var emitter = newWaterEmitter()
+//        emitter?.position = CGPoint(x: collectionCell.frame.midX, y: collectionCell.frame.midY)
+//        
+//        skView?.scene?.addChild(emitter!)
+//        
+//        print(skView?.scene?.children)
+//        
+//        if let emmiter = SKEmitterNode(fileNamed: "WaterParticles") {
+//            skView?.scene?.addChild(emmiter)
+//            skView?.presentScene(skView?.scene)
+//        }
+        
         collectionCell.plantImage.image = UIImage(named: plants[indexPath.item].pictureName)
         collectionCell.myWaterButtonDelegate = self
         collectionCell.waterButton.tag = indexPath.item
@@ -184,7 +205,8 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
             }
         } else {
             let presentVC = DetailedPlantViewController()
-            
+            presentVC.storedIndex = indexPath.item
+            presentVC.delegate = self
             presentVC.model = plants[indexPath.item]
             present(presentVC, animated: true, completion: nil)
         }
@@ -195,6 +217,9 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("Changing the cell order, moving: \(sourceIndexPath.row) to \(destinationIndexPath.row)")
         #warning("Need to modify list after")
+        let item = plants[sourceIndexPath.item]
+        plants.remove(at: sourceIndexPath.item)
+        plants.insert(item, at: destinationIndexPath.item)
     }
 }
 
@@ -213,12 +238,16 @@ extension TerrariumViewController: AddPlantDelegate {
         collectionView.reloadData()
         handleMyBars()
     }
+    func deletePlant(index: Int) {
+        plants.remove(at: index)
+        collectionView.reloadData()
+    }
     
 }
-
 protocol AddPlantDelegate {
     func appendToArray(data: Plant)
     func addToPlantsArray(data: Plant)
+    func deletePlant(index: Int)
 }
 
 extension TerrariumViewController: WaterButtonDelegate {
@@ -257,6 +286,11 @@ protocol WaterButtonDelegate {
     func pressedButtonAt(_ index: Int)
 }
 
+extension TerrariumViewController {
+    func newWaterEmitter() -> SKEmitterNode? {
+        return SKEmitterNode(fileNamed: "WaterParticles")
+    }
+}
 
 import SwiftUI
 
