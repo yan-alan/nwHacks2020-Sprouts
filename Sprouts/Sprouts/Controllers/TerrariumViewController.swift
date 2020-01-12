@@ -29,9 +29,9 @@ class TerrariumViewController: UIViewController {
         super.viewDidLoad()
         let newView = TerrariumView()
         collectionView = newView.collectionView
-        for i in 0..<12 {
-            plants.append(Plant(name: "Rose", scientificName: "Quantum Deternum", wateringInterval: 60, recieveNotification: true))
-        }
+//        for i in 0..<12 {
+//            plants.append(Plant(name: "Rose", scientificName: "Quantum Deternum", wateringInterval: 60, recieveNotification: true))
+//        }
         if(plants.count >= 3) {
             for i in 1...plants.count/3 {
                 let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
@@ -121,8 +121,21 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
         guard let collectionCell = cell as? TerrariumCollectionViewCell else {
             return cell
         }
+        collectionCell.plantImage.image = UIImage(named: plants[indexPath.item].pictureName)
         collectionCell.myWaterButtonDelegate = self
         collectionCell.waterButton.tag = indexPath.item
+        if(Date() < plants[indexPath.item].nextWaterDate!) {
+            let distance = Date().distance(to: plants[indexPath.item].nextWaterDate!)
+            print(Date().distance(to: plants[indexPath.item].nextWaterDate!))
+            collectionCell.waterButton.isHidden = true
+            collectionCell.dayLabel.isHidden = false
+            collectionCell.dayLabel.text = String((Int(distance)/3600))
+        } else {
+            print("Here")
+            collectionCell.dayLabel.isHidden = true
+            collectionCell.waterButton.isHidden = false
+
+        }
         print("here")
         if(toEdit) {
             if(plants[indexPath.item].recieveNotification) {
@@ -173,7 +186,10 @@ extension TerrariumViewController: AddPlantDelegate {
         present(newVC, animated: true, completion: nil)
     }
     func addToPlantsArray(data: Plant) {
-        self.plants.append(data)
+        var plant = data
+        plant.nextWaterDate = Date().addingTimeInterval(TimeInterval(exactly: data.wateringInterval)!)
+        CreateNotification.schedule(for: plant)
+        self.plants.append(plant)
         collectionView.reloadData()
         handleMyBars()
     }
@@ -188,6 +204,9 @@ protocol AddPlantDelegate {
 extension TerrariumViewController: WaterButtonDelegate {
     func pressedButtonAt(_ index: Int) {
         print(index)
+        plants[index].nextWaterDate = Date().addingTimeInterval(TimeInterval(exactly: plants[index].wateringInterval)!)
+        CreateNotification.schedule(for: plants[index])
+        collectionView.reloadData()
     }
 }
 
