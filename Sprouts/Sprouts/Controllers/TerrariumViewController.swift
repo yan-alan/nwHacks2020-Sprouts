@@ -21,9 +21,16 @@ class TerrariumViewController: UIViewController {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
         collectionView.addGestureRecognizer(longPressGesture)
         collectionView.reloadData()
+        NotificationCenter.default.addObserver(self, selector: #selector(onReceiveData(_:)), name: NSNotification.Name(rawValue: "ReceiveData"), object: nil)
+
         print("pls")
         
         handleMyBars()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "ReceiveData"), object: nil)
+
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +63,9 @@ class TerrariumViewController: UIViewController {
         
         self.view = newView
     }
+    @objc func onReceiveData(_ notification:Notification) {
+        collectionView.reloadData()
+    }
     
     @objc func testLogin() {
         let modalVC = LoginViewController()
@@ -70,11 +80,18 @@ class TerrariumViewController: UIViewController {
         toEdit = !toEdit
     }
     func handleMyBars() {
-        for i in 1...(plants.count/3+1) {
-            let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
-    
-            imageView.image = UIImage(named: "shelf")
-            collectionView.addSubview(imageView)
+        var count = 1
+        if(plants.count % 3 == 0) {
+            count = 0
+        }
+        if(plants.count > 0) {
+            for i in 1...(plants.count/3+count) {
+                
+                let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
+        
+                imageView.image = UIImage(named: "shelf")
+                collectionView.addSubview(imageView)
+            }
         }
     }
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
@@ -127,7 +144,12 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
             print(Date().distance(to: plants[indexPath.item].nextWaterDate!))
             collectionCell.waterButton.isHidden = true
             collectionCell.dayLabel.isHidden = false
-            collectionCell.dayLabel.text = String((Int(distance)/3600))
+            let value = Int(distance)/3600
+            if(value == 0) {
+                collectionCell.dayLabel.text = "Today"
+            } else {
+                collectionCell.dayLabel.text = "\(value) days"
+            }
         } else {
             print("Here")
             collectionCell.dayLabel.isHidden = true
