@@ -74,7 +74,7 @@ router.post("/:username", function(req, res, next) {
  */
 router.put("/:username", function(req, res, next) {
     const username = String(req.params.username);
-    const { plant } = req.body;
+    const plant = req.body;
 
     let plantCollection, newPlants;
     database.open(dbName, collectionName)
@@ -112,13 +112,13 @@ router.put("/:username", function(req, res, next) {
  * If user with matching username exists in database, finds given plant in user's list of plants by its id and then removes the plant.
  * 
  * @param {string} username - the user's username
- * @param {number} plantId - the id of the plant to be deleted
+ * @param {number} plant - the plant to be deleted
  * 
  * @returns (200) plants - the array of plants associated with a user, after deleting the target plant
  */
 router.delete("/:username", function(req, res, next) {
     const username = String(req.params.username);
-    const { plantId } = req.body;
+    const plant = req.body;
 
     let plantCollection, plants;
     database.open(dbName, collectionName)
@@ -128,11 +128,11 @@ router.delete("/:username", function(req, res, next) {
         })
         .then(user => {
             plants = user.plants;
-            const plantToRemove = plants.find(element => element._id === plantId);
+            const plantToRemove = plants.find(element => element.scientificName === plant.scientificName);
             const indexToRemove = plants.indexOf(plantToRemove);
             if (indexToRemove < 0) {
                 return res.status(422).send({
-                    error: "No plant matching the given plantId could be found." 
+                    error: "No matching plant could be found." 
                 });
             } 
             plants.splice(indexToRemove, 1);
