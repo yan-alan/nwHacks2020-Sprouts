@@ -9,7 +9,7 @@
 import UIKit
 
 class DetailedPlantViewController: UIViewController {
-    var model: DetailPlantData!
+    var model: Plant!
     override func viewDidLoad() {
         super.viewDidLoad()
         let newView = DetailedPlantView()

@@ -14,7 +14,7 @@ struct SearchPlant: Codable {
     let link: String
     let id: Int
     let completeData: Bool
-    let commonName: String?
+    var commonName: String?
 
     enum CodingKeys: String, CodingKey {
         case slug
