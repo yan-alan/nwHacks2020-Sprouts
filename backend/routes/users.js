@@ -3,11 +3,14 @@ import express from "express";
 
 const router = express.Router();
 
-const dbName = "Users";
-const collectionName = "Users";
+const userDB = "Users", userCollection = "Users";
+const plantDB = "Plants", plantCollection = "PlantCollection";
 
 /**
  * GET /api/users/
+ * 
+ * If user does not exist in database, returns 404.
+ * If user does exist in database with a matching username and password, authenticates user and returns 200.
  * 
  * @param {string} username - the user's username
  * @param {string} password - the user's password
@@ -37,6 +40,9 @@ router.get("/", function(req, res, next) {
 /**
  * POST /api/users/
  * 
+ * If user with same username exists in database, returns 404.
+ * If user does not exist in database, creates entry for user in userDB and plantDB and returns 201.
+ * 
  * @param {string} username - the user's username
  * @param {string} password - the user's password
  * 
@@ -48,14 +54,18 @@ router.post("/", function(req, res, next) {
   if (username === undefined || password === undefined) {
     res.status(422).send({ error: "Username or password must be specified" });
   } else {
-    doesUserExist(username, password)
+    doesUserExist(username)
       .then(userExists => {
         if (userExists) {
           res.status(404).send({ error: "A user with the same username already exists"});
         } else {
-          return database.open(dbName, collectionName)
+          database.open(userDB, userCollection)
             .then(userCollection => {
               userCollection.insertOne({ username, password });
+              return database.open(plantDB, plantCollection);
+            })
+            .then(plantCollection => {
+              plantCollection.insertOne({ username, plants: [] });
               res.status(201).send({ message: "User was successfully created!" });
             })
             .catch(err => {
@@ -69,9 +79,15 @@ router.post("/", function(req, res, next) {
   }
 })
 
-async function doesUserExist(username, password) {
-  return database.open(dbName, collectionName)
-    .then(collection => collection.find({ username, password }))
+async function doesUserExist(username, password = "") {
+  return database.open(userDB, userCollection)
+    .then(collection => {
+      const user = { username };
+      if (password !== "") {
+        user.password = password;
+      }
+      return collection.find(user);
+    })
     .then(cursor => cursor.count())
     .then(count => {
       if (count) {
