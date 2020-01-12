@@ -27,6 +27,8 @@ class TerrariumView: AYUIView {
         return collection
     }()
     override func setupView() {
+        
+        
         settingsButton.setSuperview(self).addTop(anchor: safeAreaLayoutGuide.topAnchor, constant: 4).addLeft(constant: 35).addWidth(withConstant: 36).addHeight(withConstant: 36).done()
         let imageView = ContentFitImageView().setSuperview(settingsButton).addConstraints(padding: 3)
         imageView.image = UIImage(named: "gear")

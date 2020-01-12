@@ -28,7 +28,7 @@ class TerrariumViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onReceiveData(_:)), name: NSNotification.Name(rawValue: "ReceiveData"), object: nil)
 
         print("pls")
-        
+
         handleMyBars()
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -46,7 +46,7 @@ class TerrariumViewController: UIViewController {
         if(plants.count >= 3) {
             for i in 1...plants.count/3 {
                 let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
-        
+
                 imageView.image = UIImage(named: "shelf")
                 collectionView.addSubview(imageView)
             }
@@ -60,14 +60,14 @@ class TerrariumViewController: UIViewController {
         newView.collectionView.dataSource = self
         newView.collectionView.register(TerrariumCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         print("here")
-                
+
         if(UserDefaults.standard.integer(forKey: "firstTime") == 0) {
             openLogin()
         }
-        
-        
+
+
         self.view = newView
-//        
+//
 //        skView = SKView(frame: newView.frame)
 //        skView!.presentScene(SKScene())
 //        self.view.addSubview(skView!)
@@ -75,13 +75,16 @@ class TerrariumViewController: UIViewController {
     @objc func onReceiveData(_ notification:Notification) {
         collectionView.reloadData()
     }
-    
+
     func openLogin() {
         let modalVC = LoginViewController()
+
+        modalVC.grabPlantsDelegate = self
+
         modalVC.modalPresentationStyle = .fullScreen
-        
+
         self.present(modalVC, animated: true, completion: {})
-        
+
     }
 
     @objc func setEdit() {
@@ -94,9 +97,9 @@ class TerrariumViewController: UIViewController {
         }
         if(plants.count > 0) {
             for i in 1...(plants.count/3+count) {
-                
+
                 let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
-        
+
                 imageView.image = UIImage(named: "shelf")
                 collectionView.addSubview(imageView)
             }
@@ -117,7 +120,7 @@ class TerrariumViewController: UIViewController {
             collectionView.cancelInteractiveMovement()
         }
     }
-    
+
     @objc func presentAdd() {
         let pushVC = AddPlantViewController()
         pushVC.terrariumDelegate = self
@@ -132,7 +135,7 @@ class TerrariumViewController: UIViewController {
 
 extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-           
+
            // 1
            // return the number of sections
            return 1
@@ -143,25 +146,25 @@ extension TerrariumViewController: UICollectionViewDelegateFlowLayout, UICollect
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return plants.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         guard let collectionCell = cell as? TerrariumCollectionViewCell else {
             return cell
         }
-//        
+//
 //        var emitter = newWaterEmitter()
 //        emitter?.position = CGPoint(x: collectionCell.frame.midX, y: collectionCell.frame.midY)
-//        
+//
 //        skView?.scene?.addChild(emitter!)
-//        
+//
 //        print(skView?.scene?.children)
-//        
+//
 //        if let emmiter = SKEmitterNode(fileNamed: "WaterParticles") {
 //            skView?.scene?.addChild(emmiter)
 //            skView?.presentScene(skView?.scene)
 //        }
-        
+
         collectionCell.plantImage.image = UIImage(named: plants[indexPath.item].pictureName)
         collectionCell.myWaterButtonDelegate = self
         collectionCell.waterButton.tag = indexPath.item
@@ -242,12 +245,98 @@ extension TerrariumViewController: AddPlantDelegate {
         self.plants.append(plant)
         collectionView.reloadData()
         handleMyBars()
+
+        sendToAndrewPost(plant)
     }
+
+    func sendToAndrewPost(_ plant: Plant) {
+        guard let andrewURL = URL(string: "http://3.19.26.69:8000/api/plants/Wren") else {
+            return
+        }
+
+        var postRequest = URLRequest(url: andrewURL)
+        postRequest.httpMethod = "POST"
+        postRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let encodedPlants = try? JSONEncoder().encode(plant)
+
+        postRequest.httpBody = encodedPlants!
+        print("encoded json: ")
+        print("\(String(bytes: encodedPlants!, encoding: .utf8))")
+
+        let dataTask = URLSession.shared.dataTask(with: postRequest) {
+            (data, response, error) in
+            if let error = error {
+                print("in error post")
+                print(error)
+            } else if let response = response {
+                print("post response:")
+                //print(response)
+            }
+
+            if let data = data {
+                print("in data post")
+                let decodeData = try? JSONDecoder().decode(PostResponse.self, from: data)
+
+                DispatchQueue.main.async {
+                    print(decodeData)
+                }
+
+            }
+        }
+
+        dataTask.resume()
+    }
+
+
+
     func deletePlant(index: Int) {
+        sendToAndrewDelete(plants[index])
         plants.remove(at: index)
         collectionView.reloadData()
     }
-    
+
+    func sendToAndrewDelete(_ plant: Plant) {
+        guard let andrewURL = URL(string: "http://3.19.26.69:8000/api/plants/Wren") else {
+            return
+        }
+
+        var postRequest = URLRequest(url: andrewURL)
+        postRequest.httpMethod = "DELETE"
+        postRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let encodedPlants = try? JSONEncoder().encode(plant)
+
+        postRequest.httpBody = encodedPlants!
+        print("encoded json: ")
+        print("\(String(bytes: encodedPlants!, encoding: .utf8))")
+
+        let dataTask = URLSession.shared.dataTask(with: postRequest) {
+            (data, response, error) in
+            if let error = error {
+                print("in error post")
+                print(error)
+            } else if let response = response {
+                //print("in response post")
+                //print(response)
+            }
+
+            if let data = data {
+                print("in data post")
+                let decodeData = try? JSONDecoder().decode(DeleteResponse.self, from: data)
+
+                DispatchQueue.main.async {
+                    print(decodeData)
+                }
+
+            }
+        }
+
+        dataTask.resume()
+    }
+
+
+
 }
 protocol AddPlantDelegate {
     func appendToArray(data: Plant)
@@ -304,6 +393,49 @@ extension TerrariumViewController {
     }
 }
 
+extension TerrariumViewController: GrabPlantsDelegate {
+    func grabPlants() {
+        guard let andrewURL = URL(string: "http://3.19.26.69:8000/api/plants/Wren") else {
+            return
+        }
+
+        var getRequest = URLRequest(url: andrewURL)
+        getRequest.httpMethod = "GET"
+
+
+        let dataTask = URLSession.shared.dataTask(with: getRequest) {
+            (data, response, error) in
+            if let error = error {
+                print("in error")
+                print(error)
+            } else if let response = response {
+                print("in response")
+                print(response)
+            }
+
+            if let data = data {
+                print("in data")
+                let decodeData = try? JSONDecoder().decode(GetAllPlantsResponse.self, from: data)
+
+                DispatchQueue.main.async {
+                    if let serverData = decodeData {
+                        self.plants = serverData.plants
+                        self.collectionView.reloadData()
+                        print(self.plants)
+                    }
+                }
+
+            }
+        }
+
+        dataTask.resume()
+    }
+}
+
+protocol GrabPlantsDelegate {
+    func grabPlants()
+}
+
 import SwiftUI
 
 
@@ -324,7 +456,3 @@ struct ControllerPreview: PreviewProvider {
         }
     }
 }
-
-
-
-
