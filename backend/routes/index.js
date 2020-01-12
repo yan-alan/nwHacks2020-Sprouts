@@ -1,9 +1,20 @@
-var express = require('express');
-var router = express.Router();
+import { database } from "../app";
+import express from "express";
+
+const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.json({ title: 'Express' });
+  const { username } = req;
+
+  database.open("Plants", "PlantCollection")
+    .then((collection) => {
+      collection.insertOne({ username: username });
+      res.json({ message: "Success!" });
+    })
+    .catch((err) => {
+      res.status(422).send({ error: err });
+    })
 });
 
-module.exports = router;
+export { router }; 
