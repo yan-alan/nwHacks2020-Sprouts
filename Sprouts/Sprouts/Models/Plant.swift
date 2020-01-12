@@ -16,7 +16,7 @@ struct Plant {
     var nextWaterDate: Date?
     var recieveNotification: Bool
     
-    init(name: String, scientificName: String, wateringInterval: Int, recieveNotification: Bool, pictureName: String? = "default") {
+    init(name: String, scientificName: String, wateringInterval: Int, recieveNotification: Bool, pictureName: String? = "plant-default") {
         self.name = name
         self.scientificName = scientificName
         self.wateringInterval = wateringInterval

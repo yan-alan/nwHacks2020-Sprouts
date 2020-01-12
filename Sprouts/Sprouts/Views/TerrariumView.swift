@@ -77,7 +77,7 @@ class TerrariumCollectionViewCell: UICollectionViewCell {
     func tellDelegateMyTag(_ index: Int) {
         myWaterButtonDelegate?.pressedButtonAt(index)
     }
-    
+    lazy var dayLabel = UILabel()
     
 
     lazy var imageView = UIImageView()
@@ -110,6 +110,8 @@ class TerrariumCollectionViewCell: UICollectionViewCell {
         plantImage.image = UIImage(named: "plant-default")
         imageView.setSuperview(self).addBottom(constant: -20).addWidth(withConstant: 30).addHeight(withConstant: 30).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         imageView.image = UIImage(named: "selected")
+        dayLabel.setSuperview(self).addTop().addRight().addLeft().addBottom(anchor: plantImage.topAnchor, constant: -10).done()
+        dayLabel.textAlignment = .center
     }
 }
 

@@ -13,7 +13,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let newView = LoginView()
+        newView = LoginView()
         
         newView.loginButton.addTarget(self, action: #selector(sendLoginOverAPI), for: .touchUpInside)
         
@@ -21,12 +21,14 @@ class LoginViewController: UIViewController {
     }
     
     @objc func sendLoginOverAPI() {
+        
         guard let andrewURL = URL(string: "http://3.19.26.69:8000/api/users"), let email = newView.emailBar.text, let password = newView.passwordBar.text else { return  }
         
         var postRequest = URLRequest(url: andrewURL)
         postRequest.httpMethod = "POST"
         
         let jsonBody = createJSONObj(email: email, password: password)
+        print(jsonBody)
         
         postRequest.httpBody = jsonBody
         
