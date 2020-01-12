@@ -70,13 +70,11 @@ class TerrariumViewController: UIViewController {
         toEdit = !toEdit
     }
     func handleMyBars() {
-        if(plants.count >= 3) {
-            for i in 1...(plants.count/3+1) {
-                let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
-        
-                imageView.image = UIImage(named: "shelf")
-                collectionView.addSubview(imageView)
-            }
+        for i in 1...(plants.count/3+1) {
+            let imageView = ContentFitImageView(frame: CGRect(x: 0, y: (i*165 + (i-1)*30 - 2), width: (Int(UIScreen.main.bounds.size.width-70)), height: 14))
+    
+            imageView.image = UIImage(named: "shelf")
+            collectionView.addSubview(imageView)
         }
     }
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
