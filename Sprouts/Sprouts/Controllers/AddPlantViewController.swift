@@ -92,17 +92,16 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
                     
                     DispatchQueue.main.async {
                         //completion handler
-                        
-                        if requestType == RequestType.searchPlants {
-                            if let data = searchData {
-                                self.responseArr = []
-                                for element in data {
-                                    self.responseArr.append(element)
-                                }
-                                
-                                self.tableView.reloadData()
+                        switch requestType {
+                        case .searchPlants:
+                            guard let data = searchData else {
+                                return
                             }
-                        } else if requestType == RequestType.getFromID {
+                            self.responseArr = data
+                            
+                            self.tableView.reloadData()
+                            
+                        case .getFromID:
                             if let data = plantData {
                                 print(data)
                             }
