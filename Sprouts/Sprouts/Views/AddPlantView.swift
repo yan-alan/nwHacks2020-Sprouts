@@ -34,6 +34,7 @@ class AddPlantView: AYUIView {
     
     lazy var whiteView = UIView()
     lazy var wateringImage = ContentFitImageView()
+    lazy var noResults = UILabel()
     
     override func setupView(){
         backgroundColor = .clear
@@ -56,8 +57,14 @@ class AddPlantView: AYUIView {
         plantLabel.backgroundColor = .white
         plantLabel.text = "Plant"
         searchBar.setSuperview(self).addTop(anchor: searchView.topAnchor).addLeft(anchor: searchView.leftAnchor, constant: 20).addBottom(anchor: searchView.bottomAnchor).addRight(anchor: searchButton.leftAnchor).done()
+        noResults.setSuperview(self).addRight(constant: -60).addLeft(constant: 60).addTop(anchor: searchView.bottomAnchor, constant: 20).done()
+        noResults.text = "No Results"
+        noResults.setFont(name: "Futura-Bold", size: 20)
+        noResults.isHidden = true
+        noResults.textAlignment = .center
         tableView.setSuperview(self).addBottom().addRight(constant: -60).addLeft(constant: 40).addTop(anchor: searchView.bottomAnchor, constant: 20).done()
         
         wateringImage.setSuperview(self).addLeft(constant: 20).addRight(constant: -20).addTop(anchor: searchView.bottomAnchor, constant: 20).addBottom(anchor: safeAreaLayoutGuide.bottomAnchor, constant: -20).isHidden = true
-        }
+       
+    }
 }
