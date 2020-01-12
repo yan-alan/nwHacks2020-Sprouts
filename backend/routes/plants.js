@@ -116,10 +116,10 @@ router.put("/", function(req, res, next) {
 router.delete("/", function(req, res, next) {
     const { username, plantId } = req.body;
 
-    let userCollection, plants;
+    let plantCollection, plants;
     database.open(dbName, collectionName)
         .then(collection => {
-            userCollection = collection;
+            plantCollection = collection;
             return collection.findOne({ username });
         })
         .then(user => {
@@ -132,9 +132,12 @@ router.delete("/", function(req, res, next) {
                 });
             } 
             plants.splice(indexToRemove, 1);
-            return userCollection.replaceOne(
+            return plantCollection.replaceOne(
                 { username: username }, 
-                { user }
+                { 
+                    username: username,
+                    plants: plants,
+                }
             );
         })
         .then(writeResult => {
