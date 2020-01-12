@@ -13,12 +13,14 @@ class SetTimeToWaterViewController: UIViewController, UITextFieldDelegate {
     var terrariumDelegate: AddPlantDelegate?
     var textField: UITextField!
     var addButton: UIButton!
+    var image: UIImageView!
     private var waterCount = 1
     var model: Plant!
     override func viewDidLoad() {
         super.viewDidLoad()
         let newView = SetTimeToWaterView()
         newView.model = model
+        image = newView.plantIcon
         addButton = newView.addButton
         addButton.addTarget(self, action: #selector(setPlantModel), for: .touchUpInside)
         textField = newView.searchBar

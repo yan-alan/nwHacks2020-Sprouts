@@ -42,7 +42,7 @@ class DetailedPlantView: AYUIView {
         let label = UILabel()
         
         label.text = "Scientific Label"
-        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.font = UIFont.italicSystemFont(ofSize: 18)
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
@@ -167,7 +167,7 @@ class DetailedPlantView: AYUIView {
         return label
     }()
     
-    
+    lazy var deleteButton = UIButton()
     
     var model: Plant? {
         didSet {
@@ -195,26 +195,30 @@ class DetailedPlantView: AYUIView {
         self.addSubview(sunAmountLabel)
         
         setupConstraints()
+        
+        deleteButton.setSuperview(self).addTop(anchor: whiteBackground.topAnchor, constant: 30).addLeft(constant: 0).addHeight(withConstant: 30).addHeight(withConstant: 30).done()
+        let doneImage = ContentFitImageView()
+        doneImage.setSuperview(deleteButton).addConstraints().done()
+        doneImage.image = UIImage(named: "delete")
     }
     
     func setupConstraints() {
+        //MARK: plantIcon Constraints
+        plantIcon.bottomAnchor.constraint(equalTo: whiteBackground.topAnchor, constant: 40).isActive = true
+        plantIcon.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+        plantIcon.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        plantIcon.widthAnchor.constraint(equalToConstant: 170).isActive = true
         //MARK: plantLabel Constraints
-        plantLabel.topAnchor.constraint(equalTo: plantIcon.bottomAnchor, constant: 25).isActive = true
+        plantLabel.topAnchor.constraint(equalTo: plantIcon.bottomAnchor, constant: 5).isActive = true
         plantLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         plantLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
         plantLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
         
         //MARK: scienceLabel Constraints
-        scienceLabel.topAnchor.constraint(equalTo: plantLabel.bottomAnchor, constant: 25).isActive = true
+        scienceLabel.topAnchor.constraint(equalTo: plantLabel.bottomAnchor, constant: 5).isActive = true
         scienceLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         scienceLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
         scienceLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
-        
-        //MARK: plantIcon Constraints
-        plantIcon.bottomAnchor.constraint(equalTo: whiteBackground.topAnchor, constant: 50).isActive = true
-        plantIcon.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
-        plantIcon.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        plantIcon.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
         //MARK: Background Constraints
         whiteBackground.topAnchor.constraint(equalTo: centerYAnchor, constant: -100).isActive = true
