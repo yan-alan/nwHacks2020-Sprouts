@@ -13,6 +13,7 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     var newView: AddPlantView!
     var tableView: UITableView!
     var responseArr: SearchResults?
+    var terrariumDelegate: AddPlantDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,8 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
         tableView.register(PlantTableViewCell.self, forCellReuseIdentifier: "cell")
         newView.searchButton.addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
         newView.dismissButton.addTarget(self, action: #selector(dismissPressed), for: .touchUpInside)
+        newView.testButton.addTarget(self, action: #selector(testPressed), for: .touchUpInside)
+        
         newView.searchBar.delegate = self
         //setup view, add self as action target
         
@@ -57,13 +60,16 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func dismissPressed() {
+        self.dismiss(animated: true, completion: {})
+    }
+    
+    @objc func testPressed() {
         if let searchText = newView.searchBar.text {
             print("Getting plant with ID \(searchText)")
             self.callAPI(queryPhrase: searchText, requestType: RequestType.getFromID)
             
         }
     }
-    
     
     func callAPI(queryPhrase: String, requestType: RequestType) {
         
@@ -75,18 +81,27 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
                 if let error = error {
                     print(error)
                 } else if let inData = data {
-                    let decodeData = try? JSONDecoder().decode(SearchResults.self, from: inData)
+                    var searchData: SearchResults?
+                    var plantData: DetailPlantData?
+                    if (requestType == RequestType.searchPlants) {
+                        searchData = try? JSONDecoder().decode(SearchResults.self, from: inData)
+                    } else if (requestType == RequestType.getFromID) {
+                        plantData = try? JSONDecoder().decode(DetailPlantData.self, from: inData)
+                    }
+                    
                     
                     DispatchQueue.main.async {
                         //completion handler
                         
                         if requestType == RequestType.searchPlants {
-                            self.responseArr = decodeData
+                            if let data = searchData {
+                                self.responseArr = data
+                            }
                         } else if requestType == RequestType.getFromID {
-                            print(decodeData)
+                            if let data = plantData {
+                                print(data)
+                            }
                         }
-                        
-                        
                         
                     }
                 }

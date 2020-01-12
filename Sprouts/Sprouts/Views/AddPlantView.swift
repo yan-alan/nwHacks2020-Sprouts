@@ -51,6 +51,17 @@ class AddPlantView: UIView {
         return button
     }()
     
+    lazy var testButton: UIButton = {
+        let button = UIButton()
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Test", for: .normal)
+        button.backgroundColor = UIColor.black
+        button.setTitleColor(UIColor.white, for: .normal)
+        
+        return button
+    }()
+    
     lazy var dismissButton: UIButton = {
         let button = UIButton()
         
@@ -101,6 +112,7 @@ class AddPlantView: UIView {
         self.addSubview(searchBar)
         self.addSubview(searchButton)
         self.addSubview(dismissButton)
+        self.addSubview(testButton)
         self.addSubview(tableView)
         setupConstraints()
     }
@@ -130,6 +142,12 @@ class AddPlantView: UIView {
         searchButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         searchButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
         searchButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        //MARK: testButton Constraints
+        testButton.topAnchor.constraint(equalTo: searchButton.bottomAnchor, constant: 50).isActive = true
+        testButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        testButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+        testButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
         
         //MARK: Table View Constraints
         tableView.topAnchor.constraint(equalTo: centerYAnchor).isActive = true

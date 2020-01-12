@@ -8,7 +8,7 @@
 
 import Foundation
 
-//
+
 struct SearchPlant: Codable {
     let slug, scientificName: String
     let link: String

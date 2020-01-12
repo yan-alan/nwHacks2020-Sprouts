@@ -10,7 +10,7 @@ import UIKit
 import AlanYanHelpers
 
 class DetailedPlantView: AYUIView {
-    var model: Plant? {
+    var model: DetailPlantData? {
         didSet {
             //do work in the view once the plant is set
         }
