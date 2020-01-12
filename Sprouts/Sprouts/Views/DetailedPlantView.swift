@@ -211,8 +211,8 @@ class DetailedPlantView: AYUIView {
         //MARK: plantLabel Constraints
         plantLabel.topAnchor.constraint(equalTo: plantIcon.bottomAnchor, constant: 5).isActive = true
         plantLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        plantLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
-        plantLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+        plantLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 70).isActive = true
+        plantLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -70).isActive = true
         
         //MARK: scienceLabel Constraints
         scienceLabel.topAnchor.constraint(equalTo: plantLabel.bottomAnchor, constant: 5).isActive = true

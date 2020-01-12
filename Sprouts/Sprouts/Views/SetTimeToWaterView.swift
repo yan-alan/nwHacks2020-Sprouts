@@ -25,7 +25,7 @@ class SetTimeToWaterView: AYUIView {
     lazy var searchBar: UITextField = {
         let textField = UITextField()
 
-        textField.placeholder = "how often does this plant need water? (s)"
+        textField.placeholder = "watering frequency? (s)"
         textField.text = ""
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
