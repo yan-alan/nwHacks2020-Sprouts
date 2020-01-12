@@ -68,6 +68,7 @@ class AddPlantView: UIView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Search for a plant!"
         textField.text = ""
+        textField.autocapitalizationType = .none
         
         textField.borderStyle = UITextField.BorderStyle.bezel
         textField.textAlignment = .center
