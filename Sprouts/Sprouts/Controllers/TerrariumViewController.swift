@@ -65,7 +65,7 @@ class TerrariumViewController: UIViewController {
         
         
         
-//        self.view = newView
+        self.view = newView
 //        
 //        skView = SKView(frame: newView.frame)
 //        skView!.presentScene(SKScene())

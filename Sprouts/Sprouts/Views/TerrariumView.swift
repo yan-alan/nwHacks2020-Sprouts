@@ -37,7 +37,7 @@ class TerrariumView: AYUIView {
         gradientView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradientView.colors = [UIColor(hex: 0xE5F3E7).cgColor, UIColor(hex: 0x41A552).cgColor]
+        gradientView.colors = [UIColor(hex: 0xE5E8F3).cgColor, UIColor(hex: 0x788FD5).cgColor]
         layer.insertSublayer(gradientView, at: 0)
         bottomView.setColor(.white)
         bottomView.clipsToBounds = true
