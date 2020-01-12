@@ -36,8 +36,9 @@ router.get("/:username", function(req, res, next) {
  */
 router.post("/:username", function(req, res, next) {
     const username = String(req.params.username);
-    const { plant } = req.body;
+    const plant = req.body;
 
+    console.log("POST: " + JSON.stringify(req.body));
     database.open(dbName, collectionName)
         .then(collection => {
             return collection.updateOne(
