@@ -16,6 +16,7 @@ class PlantTableViewCell: UITableViewCell {
     var id: Int?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupView()
     }
     override class var requiresConstraintBasedLayout: Bool {
         return true
@@ -25,8 +26,10 @@ class PlantTableViewCell: UITableViewCell {
     }
     
     func setupView() {
-        commonName.setSuperview(self).addTop().addRight(constant: -10).addLeft(constant: 10).addHeight(withConstant: 30).setColor(.red)
-        scientificName.setSuperview(self).addTop(anchor: commonName.bottomAnchor, constant: 10).addRight(constant: -10).addLeft(constant: 10).addHeight(withConstant: 30).setColor(.green)
+        commonName.setSuperview(self).addTop().addRight(constant: -20).addLeft(constant: 20).addHeight(withConstant: 30).done()
+        scientificName.setSuperview(self).addTop(anchor: commonName.bottomAnchor, constant: 2).addRight(constant: -20).addLeft(constant: 20).addHeight(withConstant: 30).done()
+        commonName.setFont(name: "Futura-Bold", size: 20)
+        scientificName.setFont(name: "Futura", size: 13)
 
     }
     
