@@ -9,6 +9,8 @@ const collectionName = "PlantCollection";
 /**
  * GET /api/plants/
  * 
+ * If user with matching username exists in database, returns list of plants associated with user.
+ * 
  * @param {string} username - the user's username
  * 
  * @returns (200) plants - the array of plants associated with a user
@@ -24,6 +26,8 @@ router.get("/", function(req, res, next) {
 
 /**
  * POST /api/plants/
+ * 
+ * If user with matching username exists in database, updates array of plants to now include the plant passed in.
  * 
  * @param {string} username - the user's username
  * @param {Plant} plant - the plant object to record
@@ -57,6 +61,9 @@ router.post("/", function(req, res, next) {
 
 /**
  * PUT /api/plants
+ * 
+ * If user with matching username exists in database, finds given plant in the user's list of plants by its id
+ * and then replaces the plant with the plant passed in.
  * 
  * @param {string} username - the user's username
  * @param {Plant} plant - the plant object to be modified
@@ -98,6 +105,8 @@ router.put("/", function(req, res, next) {
 
 /**
  * DELETE /api/plants
+ * 
+ * If user with matching username exists in database, finds given plant in user's list of plants by its id and then removes the plant.
  * 
  * @param {string} username - the user's username
  * @param {number} plantId - the id of the plant to be deleted
@@ -145,6 +154,8 @@ router.delete("/", function(req, res, next) {
 
 /**
  * GET /api/plants/:id
+ * 
+ * If user with matching username exists in database, finds given plant in user's list of plants by its id and returns the plant.
  * 
  * @param {string} username - the user's username
  * 
