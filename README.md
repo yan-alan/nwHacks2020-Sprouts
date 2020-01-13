@@ -1,5 +1,7 @@
 # nwHacks 2020 - *Sprouts*
 
+<img src="https://github.com/yan-alan/nwHacks-food-doods-1/blob/master/original.jpg" alt="Hi-fi Sketches of our app">
+
 ## Inspiration
 Interaction with indoor plants can reduce physiological and psychological stress, based on previous psychological and neurological studies. In addition many people face a common issue of forgetting when to water their plants or how to take care of them. By creating a game-like app that helps users learn to care for their plants, the goal of this project was also to help reduce their stress levels.
 
