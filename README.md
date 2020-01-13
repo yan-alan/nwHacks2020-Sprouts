@@ -8,6 +8,10 @@ Interaction with indoor plants can reduce physiological and psychological stress
 ## About
 Sprouts was built natively on iOS using Swift, with a custom back-end created with Node.js, Express, and mongoDB Atlas. The server is hosted on AmazonAWS EC2.
 
+### Devpost
+More information about the project can be found at our hackathon Devpost page at this link:
+https://devpost.com/software/sprouts-7b83a1
+
 ## Get Started
 Enough explaining! Download the app and see it in action!
 
