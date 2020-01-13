@@ -33,7 +33,7 @@ class SetTimeToWaterViewController: UIViewController, UITextFieldDelegate {
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if(string != "") {
-            guard let seconds = Int(string) else {
+            guard Int(string) != nil else {
                 addButton.userDefinedConstraintDict["height"]?.constant = 0
                 UIView.animate(withDuration: 0.4) {
                     self.view.layoutIfNeeded()

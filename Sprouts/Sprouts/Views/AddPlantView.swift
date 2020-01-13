@@ -47,7 +47,7 @@ class AddPlantView: AYUIView {
         searchView.layer.borderWidth = 1.5
         searchView.layer.borderColor = UIColor.black.cgColor
         
-        searchButton.setSuperview(self).addTop(anchor: searchView.topAnchor).addRight(anchor: searchView.rightAnchor).addBottom(anchor: searchView.bottomAnchor).addWidth(withConstant: 50)
+        searchButton.setSuperview(self).addTop(anchor: searchView.topAnchor).addRight(anchor: searchView.rightAnchor).addBottom(anchor: searchView.bottomAnchor).addWidth(withConstant: 50).done()
         let image = UIImageView()
         image.setSuperview(searchButton).addConstraints(padding: 10).done()
         image.image = UIImage(named:"magnifying-glass")
@@ -59,7 +59,7 @@ class AddPlantView: AYUIView {
         searchBar.setSuperview(self).addTop(anchor: searchView.topAnchor).addLeft(anchor: searchView.leftAnchor, constant: 20).addBottom(anchor: searchView.bottomAnchor).addRight(anchor: searchButton.leftAnchor).done()
         noResults.setSuperview(self).addRight(constant: -60).addLeft(constant: 60).addTop(anchor: searchView.bottomAnchor, constant: 20).done()
         noResults.text = "No Results"
-        noResults.setFont(name: "Futura-Bold", size: 20)
+        noResults.setFont(name: "Futura-Bold", size: 20).done()
         noResults.isHidden = true
         noResults.textAlignment = .center
         tableView.setSuperview(self).addBottom().addRight(constant: -60).addLeft(constant: 40).addTop(anchor: searchView.bottomAnchor, constant: 20).done()

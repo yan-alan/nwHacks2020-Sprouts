@@ -25,13 +25,13 @@ class SettingsView: AYUIView {
         settingsLabel.setSuperview(self).addTop(anchor: whiteView.topAnchor, constant: 20).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         settingsLabel.text = "Settings"
         settingsLabel.textAlignment = .center
-        settingsLabel.setFont(name: "Futura-Bold", size: 30)
+        settingsLabel.setFont(name: "Futura-Bold", size: 30).done()
         
         let colourLabel = UILabel()
-        colourLabel.setSuperview(self).addTop(anchor: settingsLabel.bottomAnchor, constant: 10).addLeft(constant: 20).addRight(constant: -20)
+        colourLabel.setSuperview(self).addTop(anchor: settingsLabel.bottomAnchor, constant: 10).addLeft(constant: 20).addRight(constant: -20).done()
         colourLabel.text = "Colour Scheme:"
         colourLabel.textAlignment = .left
-        colourLabel.setFont(name: "Futura", size: 17)
+        colourLabel.setFont(name: "Futura", size: 17).done()
         
         colourOptionOne.tag = 1
 
@@ -46,7 +46,7 @@ class SettingsView: AYUIView {
         colourOptionOne.layer.insertSublayer(gradientView, at: 0)
 
         colourOptionTwo.tag = 2
-        colourOptionTwo.setSuperview(self).addTop(anchor: colourLabel.bottomAnchor, constant: 20).addWidth(withConstant: 50).addHeight(withConstant: 50).addCorners(25).addLeft(anchor: colourOptionOne.rightAnchor, constant: 10)
+        colourOptionTwo.setSuperview(self).addTop(anchor: colourLabel.bottomAnchor, constant: 20).addWidth(withConstant: 50).addHeight(withConstant: 50).addCorners(25).addLeft(anchor: colourOptionOne.rightAnchor, constant: 10).done()
 //        overlayTwo.setSuperview(colourOptionTwo).addConstraints().done()
         colourOptionTwo.setImage(UIImage(systemName: "checkmark"), for: .normal)
 
@@ -58,7 +58,7 @@ class SettingsView: AYUIView {
         colourOptionTwo.layer.insertSublayer(gradientView, at: 0)
         
         colourOptionThree.tag = 3
-        colourOptionThree.setSuperview(self).addTop(anchor: colourLabel.bottomAnchor, constant: 20).addWidth(withConstant: 50).addHeight(withConstant: 50).addCorners(25).addRight(anchor: colourOptionOne.leftAnchor, constant: -10)
+        colourOptionThree.setSuperview(self).addTop(anchor: colourLabel.bottomAnchor, constant: 20).addWidth(withConstant: 50).addHeight(withConstant: 50).addCorners(25).addRight(anchor: colourOptionOne.leftAnchor, constant: -10).done()
 //        overlayThree.setSuperview(colourOptionThree).addConstraints().done()
         gradientView = CAGradientLayer()
         gradientView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)

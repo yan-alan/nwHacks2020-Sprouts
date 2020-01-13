@@ -24,7 +24,6 @@ class NetworkUtil {
             
             let returnURL = URL(string: searchURL)
             
-            print(returnURL)
             return returnURL
         } else if (request == RequestType.getFromID){
             var getURL = ""
@@ -36,7 +35,6 @@ class NetworkUtil {
             
             let returnURL = URL(string: getURL)
             
-            print(returnURL)
             return returnURL
         }
         

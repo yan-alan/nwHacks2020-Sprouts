@@ -116,7 +116,7 @@ class AddPlantViewController: UIViewController, UITextFieldDelegate {
                         searchData = try? JSONDecoder().decode(SearchResults.self, from: inData)
                     } else if (requestType == RequestType.getFromID) {
 //                        plantData = try? JSONDecoder().decode(Plant.self, from: inData)
-                        print(plantData)
+//                        print(plantData)
                     }
                     
                     

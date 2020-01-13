@@ -47,7 +47,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         postRequest.httpBody = jsonBody
         
-        print("\(String(bytes: jsonBody!, encoding: .utf8))")
 
         
         let dataTask = URLSession.shared.dataTask(with: postRequest) {

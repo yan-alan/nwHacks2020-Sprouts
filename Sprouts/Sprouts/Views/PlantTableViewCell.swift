@@ -30,8 +30,8 @@ class PlantTableViewCell: UITableViewCell {
     func setupView() {
         commonName.setSuperview(self).addTop().addRight(constant: -20).addLeft(constant: 20).addHeight(withConstant: 30).done()
         scientificName.setSuperview(self).addTop(anchor: commonName.bottomAnchor, constant: 2).addRight(constant: -20).addLeft(constant: 20).addHeight(withConstant: 30).done()
-        commonName.setFont(name: "Futura-Bold", size: 20)
-        scientificName.setFont(name: "Futura", size: 13)
+        commonName.setFont(name: "Futura-Bold", size: 20).done()
+        scientificName.setFont(name: "Futura", size: 13).done()
 
     }
     

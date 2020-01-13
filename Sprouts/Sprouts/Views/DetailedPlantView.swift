@@ -56,7 +56,7 @@ class DetailedPlantView: AYUIView {
         
         view.backgroundColor = .white
         
-        view.addCorners(30)
+        view.addCorners(30).done()
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
