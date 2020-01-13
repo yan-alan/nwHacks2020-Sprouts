@@ -24,3 +24,5 @@ Enough explaining! Download the app and see it in action!
 
 4) Click the Play button to run the Simulator
 
+5) Login with Username: Wren, Password: pass
+
