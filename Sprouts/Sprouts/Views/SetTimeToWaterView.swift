@@ -37,7 +37,7 @@ class SetTimeToWaterView: AYUIView {
     lazy var addButton = UIButton()
     override func setupView(){
         backgroundColor = .clear
-        whiteView.setSuperview(self).addBottom().addRight().addLeft().addTop(anchor: centerYAnchor, constant: -100).addCorners(30).setColor(.white)
+        whiteView.setSuperview(self).addBottom().addRight().addLeft().addTop(anchor: centerYAnchor, constant: -100).addCorners(30).setColor(.white).done()
         
         //MARK: plantIcon Constraints
         plantIcon.setSuperview(self).addBottom(anchor: whiteView.topAnchor, constant: 40).addHeight(withConstant: 200).addWidth(withConstant: 150).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -54,10 +54,10 @@ class SetTimeToWaterView: AYUIView {
         plantLabel.text = "Watering Frequency"
         searchBar.setSuperview(self).addTop(anchor: searchView.topAnchor).addLeft(anchor: searchView.leftAnchor, constant: 20).addBottom(anchor: searchView.bottomAnchor).addRight(anchor: searchView.rightAnchor, constant: -20).done()
         
-        addButton.setSuperview(self).addTop(anchor: searchView.bottomAnchor, constant: 10).addHeight(withConstant: 0).addWidth(withConstant: 100).addCorners(10).setColor(.clear)
+        addButton.setSuperview(self).addTop(anchor: searchView.bottomAnchor, constant: 10).addHeight(withConstant: 0).addWidth(withConstant: 100).addCorners(10).setColor(.clear).done()
         addButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         let label = UILabel()
-        label.setSuperview(addButton).addConstraints(padding: 5)
+        label.setSuperview(addButton).addConstraints(padding: 5).done()
         label.textAlignment = .center
         label.text = "Add"
         label.setFont(name: "Futura", size: 20).done()

@@ -38,7 +38,7 @@ class AddPlantView: AYUIView {
     
     override func setupView(){
         backgroundColor = .clear
-        whiteView.setSuperview(self).addBottom().addRight().addLeft().addTop(anchor: centerYAnchor, constant: -100).addCorners(30).setColor(.white)
+        whiteView.setSuperview(self).addBottom().addRight().addLeft().addTop(anchor: centerYAnchor, constant: -100).addCorners(30).setColor(.white).done()
         //MARK: plantIcon Constraints
         plantIcon.setSuperview(self).addBottom(anchor: whiteView.topAnchor, constant: 40).addHeight(withConstant: 150).addWidth(withConstant: 150).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         plantIcon.image = UIImage(named: "plant-empty")

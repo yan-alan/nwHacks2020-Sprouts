@@ -133,15 +133,14 @@ class TerrariumView: AYUIView {
         }
     
         layer.insertSublayer(gradientView, at: 0)
-        bottomView.setColor(.white)
+        bottomView.setColor(.white).done()
         bottomView.clipsToBounds = true
         bottomView.layer.cornerRadius = 25
         bottomView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         ShadowUIView(radius: 2, subLayer: bottomView).setSuperview(self).addBottom().addRight().addLeft().addHeight(withConstant: 120).done()
-        addButton.addCorners(33).setColor(.white)
-        ShadowUIView(radius: 2, subLayer: addButton).setSuperview(self).addConstraints(bottom: safeAreaLayoutGuide.bottomAnchor, bottomConstant: -10
-        , centerXAnchor: centerXAnchor, width: 66, height: 66).done()
-        collectionView.setSuperview(self).addTop(anchor: settingsButton.bottomAnchor, constant: 15).addRight(constant: -35).addLeft(constant: 35).addBottom(anchor: bottomView.topAnchor, constant: -5).setColor(.clear)
+        addButton.addCorners(33).setColor(.white).done()
+        ShadowUIView(radius: 2, subLayer: addButton).setSuperview(self).addBottomSafe(constant: -10).addCenterX().addWidth(withConstant: 66).addHeight(withConstant: 66).done()
+        collectionView.setSuperview(self).addTop(anchor: settingsButton.bottomAnchor, constant: 15).addRight(constant: -35).addLeft(constant: 35).addBottom(anchor: bottomView.topAnchor, constant: -5).setColor(.clear).done()
         let image = UIImage(named: "plant-small")
         let imageView2 = ContentFitImageView().setSuperview(addButton).addConstraints(padding: 5)
         imageView2.image = image

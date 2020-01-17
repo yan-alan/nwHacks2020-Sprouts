@@ -19,7 +19,7 @@ class SettingsView: AYUIView {
     lazy var overlayThree = UIView()
 
     override func setupView() {
-         whiteView.setSuperview(self).addBottom().addRight().addLeft().addHeight(withConstant: 240).addCorners(30).setColor(.white)
+        whiteView.setSuperview(self).addBottom().addRight().addLeft().addHeight(withConstant: 240).addCorners(30).setColor(.white).done()
                //MARK: plantIcon Constraints
         let settingsLabel = UILabel()
         settingsLabel.setSuperview(self).addTop(anchor: whiteView.topAnchor, constant: 20).centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true

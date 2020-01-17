@@ -262,7 +262,7 @@ extension TerrariumViewController: AddPlantDelegate {
 
         postRequest.httpBody = encodedPlants!
         print("encoded json: ")
-        print("\(String(bytes: encodedPlants!, encoding: .utf8))")
+        print("\(String(describing: String(bytes: encodedPlants!, encoding: .utf8)))")
 
         let dataTask = URLSession.shared.dataTask(with: postRequest) {
             (data, response, error) in
